@@ -1,0 +1,209 @@
+<script id="yyOrder" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>优惠券类型管理</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="content">
+                <div id="ck_search" class="form-horizontal group-border-dashed"  style="border-radius: 0px;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">优惠券类型ID</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6">
+                                <select class="form-control">
+                                    <option>所有</option>
+                                    <option>冻结</option>
+                                    <option>正常</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">有效天数</label>
+                            <div class="col-sm-6">
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                <button id="ck-search" class="btn btn-primary ">查询</button>
+                                <button id="ck-newAdd" class="btn btn-success ">新增类型</button>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">优惠券名称</label>
+                            <div class="col-sm-6">
+                                <input type="number" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">券类型</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control">
+                                        <option>通用券</option>
+                                        <option>定向券</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">领用方式</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control">
+                                        <option>线上</option>
+                                        <option>线下</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" >
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <thead class="btn-primary">
+                    <tr>
+                        <th>序号</th>
+                        <th>优惠券类型ID</th>
+                        <th>优惠券名称</th>
+                        <th>有效天数</th>
+                        <th>是否绑定使用人</th>
+                        <th>领用方式</th>
+                        <th>有效期决定方式</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{each list as value i}}
+                    <tr>
+                        <th>{{i+1}}</th>
+                        <th>{{value.ck_id}}</th>
+                        <th>{{value.type_name}}</th>
+                        <th>{{value.days}}</th>
+                        {{if value.limit_person=="0"}}
+                        <th>通用券</th>
+                        {{else if value.limit_person=="1"}}
+                        <th>定向券</th>
+                        {{/if}}
+                        {{if value.issue_type=="0"}}
+                        <th>线上</th>
+                        {{else if value.issue_type=="1"}}
+                        <th>线下</th>
+                        {{/if}}
+                        <th>{{period_descision}}</th>
+                        {{if value.state=="0"}}
+                        <th>冻结</th>
+                        {{else if value.state=="1"}}
+                        <th>正常</th>
+                        {{/if}}
+                        <th>操作</th>
+                    </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {{include 'tpl-page'}}
+    </div>
+    <!--新增-->
+    <div class="md-modal colored-header custom-width md-effect-9 form-horizontal" id="form-primary" style="perspective: 1300px; height: 482px;">
+        <div class="md-content">
+            <div class="modal-header">
+                <h3>新增优惠券类型</h3>
+                <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div id="ck_modal" class="modal-body form">
+                <div class="row">
+                    <div class="form-group ">
+                        <label class="col-sm-3 control-label">优惠券名称</label>
+                        <div class="col-sm-6">
+                            <input data-name="name" type="text" class="form-control"  />
+                        </div>
+                        <span class="red">*</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">使用条件</label>
+                        <div class="col-sm-6">
+                            <label class="col-sm-2 control-label">满</label>
+                            <div class="col-sm-3">
+                                <input data-name="requirement" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control" type="text"/>
+                            </div>
+                            <label class="col-sm-1 control-label">元</label>
+                            <label class="col-sm-2 control-label">减</label>
+                            <div class="col-sm-3">
+                                <input data-name="value" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control" type="text"/>
+                            </div>
+                            <label class="col-sm-1 control-label">元</label>
+                        </div>
+                        <span class="red">*</span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-3 control-label">有效天数</label>
+                        <div class="col-sm-6">
+                            <input data-name="days" onkeyup="this.value=this.value.replace(/\D/g,'')" type="text" class="form-control"  />
+                            <span class="help-block alert-danger">1即为一天有效期，例如有效期从2015-05-20早上到2015-05-20晚上也视作1天</span>
+                        </div>
+                        <span class="red">*</span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-3 control-label">是否绑定使用人</label>
+                        <div class="col-sm-6">
+                            <label class="radio-inline"> <input type="radio" value="0" checked="" name="limit_person" class="icheck">通用券</label>
+                            <label class="radio-inline"> <input type="radio" value="1" name="limit_person" class="icheck">定向券</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">领用方式</label>
+                        <div class="col-sm-6">
+                            <label class="radio-inline"> <input type="radio" value="0" checked="" name="issue_type" class="icheck">线上</label>
+                            <label class="radio-inline"> <input type="radio" value="1" name="issue_type" class="icheck">线下</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">有效期决定方式</label>
+                        <div class="col-sm-6">
+                            <label class="radio-inline"> <input type="radio" value="0" checked="" name="period_descision" class="icheck">生成时决定</label>
+                            <label class="radio-inline"> <input type="radio" value="1" name="period_descision" class="icheck">领用时决定</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">状态</label>
+                        <div class="col-sm-6">
+                            <select data-name="state" class="form-control">
+                                <option value="0">正常</option>
+                                <option value="1">冻结</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">备注</label>
+                        <div class="col-sm-6">
+                            <textarea data-name="memo" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="ck_cancel" type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">返回</button>
+                <button id="ck_submit" type="button" class="btn btn-primary btn-flat md-close" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+    <div class="md-overlay"></div>
+    <!--/新增-->
+</script>

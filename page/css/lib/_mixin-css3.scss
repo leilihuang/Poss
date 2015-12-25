@@ -1,0 +1,73 @@
+﻿//前缀
+@mixin hack($name, $value){
+  -moz-#{$name}: $value;
+  -webkit-#{$name}: $value;
+  #{$name}: $value;
+}
+
+//圆角
+@mixin borderRadius($param){
+  @include hack(border-radius, $param);
+}
+
+//线性渐变
+@mixin gra($begin,$end){
+  background-image: -webkit-gradient(linear, left top, left bottom, from($begin), to($end));
+  background-image: -webkit-linear-gradient(top, $begin, $end);
+  background-image:    -moz-linear-gradient(top, $begin, $end);
+  background-image:      -o-linear-gradient(top, $begin, $end);
+  background-image:         linear-gradient(top, $begin, $end);
+}
+
+//旋转
+@mixin rotate($degrees){
+  @include hack(transform, rotate($degrees));
+
+}
+
+//翻转
+@mixin scale($x, $y){
+  @include hack(transform, scale($x, $y));
+}
+
+@mixin flexbox(){
+  display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;      /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex; 
+}
+
+@mixin flexboxChild($num:1){
+  -webkit-box-flex: $num;      /* OLD - iOS 6-, Safari 3.1-6 */
+  -moz-box-flex: $num;         /* OLD - Firefox 19- */
+  -webkit-flex: $num;          /* Chrome */
+  -ms-flex: $num;              /* IE 10 */
+  flex: $num;           
+}
+@mixin flexboxColumn{
+  -webkit-box-direction: normal; 
+  -moz-box-direction: normal;
+  -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;  
+  -webkit-flex-direction: column;        /* column, row-reverse, column-reverse */
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+//阴影
+@mixin boxShadow($param){
+  @include hack(box-shadow, $param);
+}
+
+//水平居中
+@mixin horizontalCenter{
+  @include hack(box-align, center);
+  @include hack(justify-content, center);
+}
+//垂直居中
+@mixin verticalCenter{
+  @include hack(box-pack,center);
+  @include hack(align-items,center);
+}
+

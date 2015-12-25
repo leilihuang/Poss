@@ -1,0 +1,126 @@
+<!--
+模板文件
+    语法地址：http://www.jq22.com/jquery-info1097
+    https://github.com/aui/artTemplate/wiki/syntax:simple
+常用语法：
+    单个值：
+        {{title}}
+
+    条件表达式
+        {{if admin}}
+            <p>admin</p>
+        {{else if code > 0}}
+            <p>master</p>
+        {{else}}
+            <p>error!</p>
+        {{/if}}
+
+    遍历表达式
+    无论数组或者对象都可以用 each 进行遍历。
+        {{each list as value index}}
+            <li>{{index}} - {{value.user}}</li>
+        {{/each}}
+
+    子模板嵌套
+        {{include 'tpl-page'}} 引号里面为id名
+-->
+<script id="test"  type="text/html">
+    <h1>{{title}}</h1>
+    <ul>
+        {{each list as value i}}
+        <li>索引 {{i + 1}} ：{{value}}</li>
+        {{/each}}
+    </ul>
+</script>
+<!--动态添加tab模板-->
+<script id="tpl-tab" type="text/html">
+    <li class="active">
+        <a href={{href}} data-toggle="tab">{{text}}<i class="fa fa-times"></i></a>
+    </li>
+</script>
+<!--对应tab的内容块-->
+<script id="tpl-con" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        {{include 'tpl-table'}}
+    </div>
+</script>
+<!--动态添加表格-->
+<script  id="tpl-table" type="text/html">
+    <div class="row" >
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead class="btn-primary">
+                <tr>
+                    <th>序号</th>
+                    <th>注册来源</th>
+                    <th>会员号</th>
+                    <th>登录名</th>
+                    <th>手机</th>
+                    <th>邮箱</th>
+                    <th>注册日期</th>
+                    <th>会员状态</th>
+                    <th>会员积分</th>
+                    <th>活动来源</th>
+                    <th>注册终端</th>
+                    <th>宝宝昵称</th>
+                    <th>宝宝性别</th>
+                    <th>宝宝介绍</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{each list as value i}}
+                <tr>
+                    <th>{{i+1}}</th>
+                    {{if value.regist_term=="0" }}
+                    <th>PC</th>
+                    {{else if value.regist_term=="1" }}
+                    <th>WAP</th>
+                    {{else}}
+                    <th>APP</th>
+                    {{/if}}
+                    <th>会员号</th>
+                    <th>登录名</th>
+                    <th>手机</th>
+                    <th>邮箱</th>
+                    <th>注册日期</th>
+                    <th>会员状态</th>
+                    <th>会员积分</th>
+                    <th>活动来源</th>
+                    <th>注册终端</th>
+                    <th>宝宝昵称</th>
+                    <th>宝宝性别</th>
+                    <th>宝宝介绍</th>
+                    <th>操作</th>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{include 'tpl-page'}}
+</script>
+<!--分页模板-->
+<script id="tpl-page"  type="text/html">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="pull-right">
+                <div class="dataTables_paginate paging_bs_normal">
+                    <ul class="pagination">
+                        <li class="prev disabled"><a href="#"><span class="fa fa-angle-left"></span>&nbsp;Previous</a></li>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li class="next"><a href="#">Next&nbsp;<span class="fa fa-angle-right"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</script>
+<script id="tpl-modelForm" type="text/html">
+
+</script>
