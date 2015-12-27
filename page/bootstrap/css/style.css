@@ -4553,7 +4553,7 @@ button::-moz-focus-inner {
   border-bottom: 0;
 }
 .colored-header .modal-header {
-  padding: 20px;
+  /*padding: 20px;*/
   border-bottom: 1px solid #1080de !important;
   background-color: #2494f2;
   color: #fff;

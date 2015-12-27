@@ -15,6 +15,10 @@
         window.Poss={}
     }
     Poss={
+        /**打印日志
+         * @text 内容
+         * @status 0 在控制台打印  1 alert弹出层打印
+         * */
         isDeBug: function (text,status) {
             if(!status){
                 status=0;
@@ -27,16 +31,41 @@
                 }
             }
         },
+        /**时间控件初始化*/
         dateTime: function () {
             $(".datetime").datetimepicker({autoclose: true});
         },
+        /**调用接口打印报错信息*/
         errorDate: function (text,href) {
             this.isDeBug(text,1);
             var h='<div class="tab-pane active cont" id='+href+'>'+text+'</div>';
             return h;
         },
+        /**object对象转换json字符串*/
         isJson: function (obj) {
             return JSON.stringify(obj);
+        },
+        inputVal: function ($con,date) {
+            $con.find(":text").each(function () {
+                if($(this).val()==''){
+                    $(this).parents('.form-group').addClass("has-error");
+                }else{
+                    $(this).parents('.form-group').removeClass("has-error");
+                    date[$(this).attr("data-name")]=$(this).val();
+                }
+            });
+        },
+        radioVal: function ($con,date) {
+            $con.find(":radio").each(function () {
+                if($(this).attr("checked")=="checked"){
+                    date[$(this).attr("name")]=$(this).val();
+                }
+            });
+        },
+        selectVal: function ($con,date) {
+            $con.find("select").each(function () {
+                date[$(this).attr("data-name")]=$(this).val();
+            });
         }
     }
 
