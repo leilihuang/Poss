@@ -1,0 +1,118 @@
+<script id="tpl-couponsQuery" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>优惠券券号查询</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="content">
+                <div id="coupons_query" class="form-horizontal group-border-dashed"  style="border-radius: 0px;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">优惠券号码：</label>
+                            <div class="col-sm-6">
+                                <input data-name="co_id" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label  class="col-sm-3 control-label">批次号：</label>
+                                <div class="col-sm-6">
+                                    <input data-name="batch_no" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">优惠券名称：</label>
+                            <div class="col-sm-6">
+                                <input data-name="ck_id" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6">
+                                <select data-name="state" class="form-control">
+                                    <option value="">所有</option>
+                                    <option value="0">未发放</option>
+                                    <option value="1">已发放</option>
+                                    <option value="2">已使用</option>
+                                    <option value="3">已失效</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">优惠券类型（使用范围）：</label>
+                            <div class="col-sm-6">
+                                <select data-name="state" class="form-control">
+                                    <option value="">请选择优惠券类型</option>
+                                    <option value="0">全场通用券</option>
+                                    <option value="1">专场优惠券</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                <button id="coupons-button" class="btn btn-primary ">查询</button>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" >
+            <div class="col-md-12  coupons-table">
+                <!--表格-->
+                {{include 'coupons-table'}}
+            </div>
+        </div>
+        <!--分页-->
+        {{include 'tpl-page'}}
+    </div>
+</script>
+<!--表格-->
+<script id="coupons-table" type="text/html">
+    <table class="table table-bordered text-centent">
+        <thead class="btn-primary">
+        <tr>
+            <th>序号</th>
+            <th>批次号</th>
+            <th>券号</th>
+            <th>批次名称</th>
+            <th>优惠券名称</th>
+            <th>优惠券适用范围</th>
+            <th>状态</th>
+            <th>有效期</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{each list as value i}}
+        <tr>
+            <th>{{i+1}}</th>
+            <th>{{value.batch_no}}</th>
+            <th>{{value.co_id}}</th>
+            <th>{{value.memo}}</th>
+            <th>{{value.type_name}}</th>
+            {{if value.apply_limit=="0"}}
+            <th>通用券</th>
+            {{else if value.apply_limit=="1"}}
+            <th>定向券</th>
+            {{/if}}
+            {{if value.state=="0"}}
+            <th>未发放</th>
+            {{else if value.state=="1"}}
+            <th>已发放</th>
+            {{else if value.state=="2"}}
+            <th>已使用</th>
+            {{else if value.state=="3"}}
+            <th>已失效</th>
+            {{/if}}
+            <th>{{value.validity_start}} -- {{value.validity_end}}</th>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>

@@ -770,6 +770,7 @@ body.modal-open,
   position: fixed;
   width: 216px;
   background: #272930;
+  height: 100%;
 }
 #cl-wrapper.fixed-menu .menu-space .content {
   outline: none;
@@ -954,6 +955,8 @@ body {
   position: relative;
   vertical-align: top;
   padding-bottom: 49px;
+  width: 216px;
+  min-width: 216px;
 }
 #pcont {
   display: table-cell;
@@ -1153,7 +1156,7 @@ textarea.form-control {
 input::-webkit-input-speech-button {
   -webkit-transform: scale(3, 2.2) translate(-2px, -1px);
   background-color: #fff
-  display:block !important;
+display:block !important;
 }
 /*PAGES*/
 /*Login*/
@@ -1770,6 +1773,9 @@ body.texture {
 }
 .bars-widget h3 {
   margin: 0;
+}
+table th,table td{
+  text-align: center;
 }
 table.information td {
   font-size: 13px;

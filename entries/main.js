@@ -15,6 +15,28 @@
         window.Poss={}
     }
     Poss={
+        //base:"http://192.168.2.245:8088",
+        base:"http://10.2.8.115:8088",
+        /**
+         * status 0表示显示年月日 1表示年月日时分秒*/
+        isDate: function (str,status) {
+            var a=new Date(str), time=a.toLocaleDateString();
+            if(status==0){
+                time=a.toLocaleDateString()+" "+a.getHours()+":"+a.getMinutes();
+            }
+            return time;
+        },
+        /**分转元*/
+        spun: function (num) {
+            if(num==""){
+                num=0;
+            }
+            return Math.floor(Number(num))/100;
+        },
+        /**url接口*/
+        baseUrl: function (url) {
+            return this.base+url;
+        },
         /**打印日志
          * @text 内容
          * @status 0 在控制台打印  1 alert弹出层打印

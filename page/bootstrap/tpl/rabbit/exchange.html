@@ -1,0 +1,105 @@
+<script id="tpl-Exchange" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>兔兔币兑换明细查询</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="content">
+                <div id="ck_search" class="form-horizontal group-border-dashed"  style="border-radius: 0px;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">用户名</label>
+                            <div class="col-sm-6">
+                                <input data-name="user_name" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">开始时间 </label>
+                            <div class="col-sm-6">
+                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    <input data-name="start_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                <button id="tt-search" class="btn btn-primary ex-search">查询</button>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">兑换类型</label>
+                                <div class="col-sm-6">
+                                    <select data-name="ck_id" class="form-control">
+                                        <option value="">所有</option>
+                                        <option value="0">订单完成</option>
+                                        <option value="1">宝宝生日</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">结束时间 </label>
+                                <div class="col-sm-6">
+                                    <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                        <input data-name="end_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                        <span  class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label  class="col-sm-3 control-label">优惠券号码</label>
+                                <div class="col-sm-6">
+                                    <input data-name="co_id" onkeyup="this.value=this.value.replace(/\D/g,'')"  data-name="co_id" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" >
+            <div class="col-md-12  tt-table">
+
+            </div>
+        </div>
+        <!--分页-->
+        <div class="tplPage" style="display: none">
+            {{include 'tpl-page'}}
+        </div>
+    </div>
+</script>
+<!--表格-->
+<script id="tt-table" type="text/html">
+    <table class="table table-bordered text-centent">
+        <thead class="btn-primary">
+        <tr>
+            <th>序号</th>
+            <th>券号</th>
+            <th>兑换类型</th>
+            <th>兔兔币</th>
+            <th>用户</th>
+            <th>兑换时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{each list as value i}}
+        <tr>
+            <td>{{value.ex_num}}</td>
+            <td>{{value.co_id}}</td>
+            <td>{{value.exchange_type}}</td>
+            <td>{{value.rabbit_point}}</td>
+            <td>{{value.user_name}}</td>
+            <td>{{value.ex_time}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>

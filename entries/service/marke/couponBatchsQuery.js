@@ -1,6 +1,8 @@
 define(
-    ['jQuery','entries/lib/ui/class','template','entries/util/util'],
-    function ($,Class,template,Util) {
+    ['jQuery','entries/lib/ui/class','template'],
+    function ($,Class,template) {
+        var id = "couponBatchsQuery";
+        var editId = "couponBatchsEdit";
         var search=Class.create({
             setOptions: function (opts) {
                 var options={
@@ -10,10 +12,7 @@ define(
                     ck_newAdd:$("#ck-newAdd"),
                     hideCon:$("#hideCon"),
                     status:0,
-                    total:0,
-                    $this:null,
                     user:null,
-                    count:10,
                     bool:false
                 };
                 $.extend(true,this,options,opts);
@@ -25,49 +24,13 @@ define(
             },
             bindEval: function () {
                 if(this.status==0){
-                    this.user=$("#ckSearch");
-                    this.status=1;
                     Poss.dateTime();
                     this.loadAdd(this);
                     this.loadSerach(this);
                     this.cancel(this);
                     this.submit(this);
-                    this.page();
-
+                    this.status=1;
                 }
-            },
-            /**
-             * 第一个参数传递分页的容器
-             * @url 分页接口
-             * */
-            page: function () {
-                var pageCom=this.user.find(".pagination"),
-                    pre=pageCom.find(".prev"),
-                    next=pageCom.find(".next"),
-                    number=pageCom.find(".number"),
-                    total=pageCom.find(".total"),
-                    _this=this;
-                Util.prePage(pre,next,number,"/marketing/coupon-kinds", function (data) {
-                    _this.tableLoad(data);
-                });
-                Util.nextPage(pre,next,number,"/marketing/coupon-kinds", function (data) {
-                    _this.tableLoad(data);
-                });
-                Util.enterEval(pre,next,number.find("input"),"/marketing/coupon-kinds", function (data) {
-                    _this.tableLoad(data);
-                });
-                this.setCount(total);
-            },
-            /**设置分页总数*/
-            setCount: function (total) {
-                Util.total=Math.ceil(Number(this.total)/this.count);
-                total.text(Util.total);
-            },
-            tableLoad: function (data) {
-                var html=template('ck-table',{list:data});
-                var $table=this.user.find(".ck-table");
-                this.user.find(".ck-table").empty();
-                this.edit(html,$table);
             },
             layout: function () {
                 var _this=this;
@@ -78,28 +41,25 @@ define(
                 });
             },
             loadDate: function (callBack) {
-                var _this=this;
                 $.ajax({
-                    url:Poss.baseUrl("/marketing/coupon-kinds"),
+                    url:Poss.baseUrl("/marketing/coupon-batchs"),
                     type:"GET",
                     dataType:"json",
                     contentType:"application/json",
-                    data:{ last_cursor:"1",count:_this.count},
-                    success: function (date,textStatus, jqXHR) {
-                        _this.total=jqXHR.getResponseHeader("X-Total-Count");
+                    success: function (date) {
                         var $div=$('<div></div>');
                         $('body').append($div);
                         var data={
                             list:date,
-                            href:"ckSearch"
+                            href:id
                         };
-                        $div.load('tpl/markingMgm/ckSearch.html', function () {
-                            var h=template('tpl-ckSearch',data);
+                        $div.load('tpl/markingMgm/couponBatchsQuery.html', function () {
+                            var h=template('tpl-couponBatchsQuery',data);
                             callBack(h);
                         });
                     },
                     error: function () {
-                        var h=Poss.errorDate("接口调用失败","ckSearch");
+                        var h=Poss.errorDate("接口调用失败","couponBatchsQuery");
                         callBack(h);
 
                     }
@@ -107,37 +67,33 @@ define(
             },
             //查询
             loadSerach: function (_this) {
-                $("#ck-search").on("click", function () {
-                    _this.searchVild(function (date) {
-                      _this.loadEdit(date,_this);
+                $("#couponBatchs-button").on("click", function () {
+                       _this.searchVild(function (date) {
+                       _this.loadEdit(date,_this);
                     });
                 });
             },
-            loadEdit: function (date,_this) {
+            loadEdit: function (date) {
+                var _this=this;
                 $.ajax({
-                    url:Poss.baseUrl('/marketing/coupon-kinds'),
+                    url:Poss.baseUrl('/marketing/coupon-batchs'),
                     type:'GET',
                     dataType:'json',
                     contentType:'application/json',
-                    data:Poss.isJson(date),
-                    success: function (data,textStatus, jqXHR) {
-                        _this.total=jqXHR.getResponseHeader("X-Total-Count");
-                        var pageCom=$("#ckSearch").find(".pagination"),
-                            number=pageCom.find(".number"),
-                            total=pageCom.find(".total");
-                        number.find("input").val(1);
-                       _this.tableLoad(data);
-                        _this.setCount(total);
+                    data:date,
+                    success: function (data) {
+                        var html=template('couponBatchs-table',{list:data});
+                        $("#"+id).find(".couponBatchs-table").empty();
+                        var $table=$("#"+id).find(".couponBatchs-table");
+                        _this.edit(html,$table);
                     }
                 });
             },
             searchVild: function (callback) {
-                var date={},ck_search=$("#ck_search");
+                var date={},ck_search=$("#couponBatchs_query")
                 ck_search.find(":text").each(function () {
                     date[$(this).attr("data-name")]=$(this).val();
                 });
-                date["last_cursor"]=1;
-                date["count"]=10;
                 Poss.selectVal(ck_search,date);
                 callback(date);
             },
@@ -153,59 +109,52 @@ define(
                 $(html).find(".edits").each(function () {
                     $(this).on('click', function () {
                         var text=$(this).text(),href=$(this).attr('href'),
-                            ck_id=$(this).parents("tr").find("td").eq(1).text();
+                            batch_no=$(this).parents("tr").find("td").eq(1).text();
                         _this.tabs.find("a").each(function (i) {
                             if(href==$(this).attr("href")){
-                                _this.$this=$(this);
+                                _this.user=$(this);
                                 _this.bool=true;
                             }
                             if(i== _this.tabs.find("a").length-1){
-                                _this.isTab(text,ck_id);
+                                _this.isTab(text,batch_no);
                             }
                         });
                     })
                 }).end().appendTo($table);
             },
-            isTab: function (text,ck_id) {
-                var _this=this;
-                Util.isTab(text,'#ckEdit',this.bool,this.$this, function (status) {
-                    if(status==0){
-                        _this.tplCon(ck_id,0);
-                    }else{
-                        _this.tplCon(ck_id);
-                    }
-                });
-                this.bool=false;
-                /*                var _this=this,
-                                    html=template('tpl-tab',{
-                                        text:text,
-                                        href:'#ckEdit'
-                                    });
-                                if(_this.bool){
-                                    var i=_this.user.parent().index();
-                                    _this.tabs.find("li").eq(i).addClass("active").siblings(".active").removeClass("active");
-                                    _this.tabCom.find(".tab-pane").eq(i).addClass("active").siblings(".active").removeClass("active");
-                                    _this.tplCon(ck_id,0);
-                                }else{
-                                    _this.tabs.find(".active").removeClass('active');
-                                    $(html).find(".fa-times").on('click', function () {
-                                        var i=$(this).parents("li").index();
-                                        if($(this).parents("li").hasClass('active')){
-                                            _this.delTab(i,true,"ckEdit");
-                                        }else{
-                                            _this.delTab(i,false,"ckEdit");
-                                        }
-                                        return false;
-                                    }).end().find("a").on("click", function () {
-                                        _this.tabCom.find("#ckEdit").addClass("active").siblings(".active").removeClass("active");
-                                    }).end().appendTo( _this.tabs);
-                                    _this.tplCon(ck_id);
-                                }*/
+            isTab: function (text,batch_no) {
+                var _this=this,
+                    html=template('tpl-tab',{
+                        text:text,
+                        href:editId
+                    });
+                if(_this.bool){
+                    var i=_this.user.parent().index();
+                    _this.tabs.find("li").eq(i).addClass("active").siblings(".active").removeClass("active");
+                    _this.tabCom.find(".tab-pane").eq(i).addClass("active").siblings(".active").removeClass("active");
+                    _this.tplCon(batch_no,0);
+                }else{
+                    _this.tabs.find(".active").removeClass('active');
+                    $(html).find(".fa-times").on('click', function () {
+                        var i=$(this).parents("li").index();
+                        if($(this).parents("li").hasClass('active')){
+                            _this.delTab(i,true,"ckEdit");
+                        }else{
+                            _this.delTab(i,false,"ckEdit");
+                        }
+                        return false;
+                    }).end().find("a").on("click", function () {
+                        _this.tabCom.find(editId).addClass("active").siblings(".active").removeClass("active");
+                    }).end().appendTo( _this.tabs);
+                    _this.tplCon(batch_no);
+                }
+                _this.bool=false;
+
             },
-            tplCon: function (ck_id,status) {
-                var url="/marketing/coupon-kinds/"+ck_id,_this=this;
+            tplCon: function (batch_no,status) {
+                var url="/marketing/coupon-batchs/"+batch_no,_this=this;
                 $.ajax({
-                   url:Poss.baseUrl(url),
+                    url:Poss.baseUrl(url),
                     type:"GET",
                     dataType:"JSON",
                     contentType:"application/json",
@@ -224,7 +173,6 @@ define(
                             _this.tabCom.find('.active').removeClass('active');
                             $(h).find(".edit-cen").on("click", function () {
 
-                                _this.delTab($("#ckEdit").index(),true,"ckEdit");
                             }).end().find(".edit-sub").on("click", function () {
                                 _this.editSub();
                             }).end().appendTo(_this.tabCom);
@@ -238,7 +186,7 @@ define(
             editSub: function () {
                 var _this=this;
                 this.editVail(function (data) {
-                  var  url="/marketing/coupon-kinds/"+data["ck_id"];
+                    var  url="/marketing/coupon-kinds/"+data["ck_id"];
                     $.ajax({
                         url:Poss.baseUrl(url),
                         type:"PUT",
@@ -312,11 +260,11 @@ define(
             },
             //弹出层显示
             modelShow: function () {
-               Util.modelShow(this.user);
+                $("#form-primary").addClass("md-show").css("perspective","none");
             },
             //弹出层隐藏
             modelHide: function () {
-                Util.modelHide(this.user);
+                $("#form-primary").removeClass("md-show").css("perspective","1300px");
             }
         });
         var s=null;

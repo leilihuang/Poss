@@ -1,0 +1,53 @@
+<script id="tpl-proportion" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>兔兔币兑换现金券比例</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-md-12  ck-table">
+                <!--表格-->
+                {{include 'pro-table'}}
+            </div>
+        </div>
+    </div>
+</script>
+<!--表格-->
+<script id="pro-table" type="text/html">
+    <table class="table table-bordered text-centent">
+        <thead class="btn-primary">
+        <tr>
+            <th>会员等级</th>
+            <th>内容</th>
+            <th>所需兔兔币</th>
+            <th>现金券</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{each list as value i}}
+        <tr>
+            <td>{{value.member_level}}</td>
+            <td>
+                {{each value.level_content as con}}
+                    <div>{{con.description}}</div>
+                {{/each}}
+            </td>
+            <td>
+                {{each value.level_content as con}}
+                <div><span class="red">{{con.point}}</span>兔兔币</div>
+                {{/each}}
+            </td>
+            <td>
+                {{each value.level_content as con}}
+                <div><span class="red">{{con.coupon}}</span>元现金券</div>
+                {{/each}}
+            </td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>
+

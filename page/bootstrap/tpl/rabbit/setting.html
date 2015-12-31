@@ -1,0 +1,119 @@
+<script id="tpl-setting" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>兔兔币策略设置</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-primary set_search">查询策略</button>
+                <button class="btn btn-primary set_add">新增活动策略</button>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-md-12  tt-table">
+                {{include 'set-table'}}
+            </div>
+        </div>
+        <div class="row">
+            {{include 'set-add'}}
+        </div>
+    </div>
+</script>
+<!--表格-->
+<script id="set-table" type="text/html">
+    <table class="table table-bordered text-centent">
+        <thead class="btn-primary">
+        <tr>
+            <th>序号</th>
+            <th>策略名称</th>
+            <th>奖励兔兔币</th>
+            <th>有效期</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{each list as value i}}
+        <tr>
+            <td>{{value.pg_id}}</td>
+            {{if value.orders=="0"}}
+            <td>常规</td>
+            {{else}}
+            <td>活动</td>
+            {{/if}}
+            <td>{{value.point}}</td>
+            <td><span class="red">{{value.start_date}}</span>&nbsp;到&nbsp;<span class="red">{{value.end_date}}</span></td>
+            <td>{{value.memo}}</td>
+            <td>操作</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>
+<script id="set-add" type="text/html">
+    <div class="md-modal colored-header custom-width md-effect-9 form-horizontal form-primary" style="perspective: 1300px; height: 482px;">
+        <div class="md-content">
+            <div class="modal-header">
+                <h3>新增积分获取规则</h3>
+                <button type="button" class="close md-close ck_cancel" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div id="ck_modal" class="modal-body form">
+                <div class="row">
+                    <div class="form-group ">
+                        <label class="col-sm-3 control-label">获取规则ID</label>
+                        <div class="col-sm-6">
+                            <input data-name="pg_id" type="text" class="form-control"  />
+                        </div>
+                        <span class="red">请输入获取兔兔币规则ID</span>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-sm-3 control-label">可获积分数</label>
+                        <div class="col-sm-6">
+                            <input data-name="point" type="text" class="form-control"  />
+                        </div>
+                        <span class="red">请输入可获兔兔币数</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">活动时间</label>
+                            <div class="col-sm-3">
+                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    <input data-name="start_date" class="form-control" size="16" type="text" value="" readonly="">
+                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                            </div>
+                            <div style="float: left;">
+                                <label class="control-label">到</label>
+                            </div>
+                            <div class="col-sm-3">
+                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    <input data-name="end_date" class="form-control" size="16" type="text" value="" readonly="">
+                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group ">
+                        <label class="col-sm-3 control-label">备注</label>
+                        <div class="col-sm-6">
+                            <input data-name="memo" type="text" class="form-control"  />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button  type="button" class="btn btn-default btn-flat md-close ck_cancel" data-dismiss="modal">返回</button>
+                <button id="ck_submit" type="button" class="btn btn-primary btn-flat md-close ck_sub" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+    <div class="md-overlay"></div>
+</script>
