@@ -1,0 +1,342 @@
+<script id="tpl-ruleSetting" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>双11大促规则</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row rulesetting">
+            <div class="content">
+                <div id="ck_search" class="form-horizontal group-border-dashed" style="border-radius: 0px;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">规则编码:</label>
+                            <div class="col-sm-6">
+                                <input data-name="ck_id" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">
+                                <button id="rule-search" class="btn btn-primary btn-width">查询</button>
+                            </label>
+                            <label class="col-sm-4 control-label">
+                                <button id="qury-clear" class="btn btn-info btn-width">清空</button>
+                            </label>
+                            <label class="col-sm-4 control-label">
+                                <button href="#addRule" id="rule-add" class="btn btn-success btn-width">新增规则</button>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">规则名称:</label>
+
+                                <div class="col-sm-6">
+                                    <input data-name="rule_name" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12  ck-table">
+                <!--表格-->
+                {{include 'rule-table'}}
+            </div>
+        </div>
+        <!--分页-->
+        {{include 'tpl-page'}}
+    </div>
+</script>
+<!--表格-->
+<script id="rule-table" type="text/html">
+    <table class="table table-bordered text-centent">
+        <thead class="table-head">
+        <tr>
+            <th>序号</th>
+            <th>规则名称</th>
+            <th>规则编码</th>
+            <th>有效期</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{each list as value i}}
+        <tr>
+            <td>{{i+1}}</td>
+            <td>{{value.name}}</td>
+            <td>{{value.qr_id}}</td>
+            <td>{{value.start_date}}到{{value.end_date}}</td>
+            <td><a href="#ruleEdit" class="edits">修改</a></td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>
+<!--修改规则-->
+<script id="tpl-ruleEdit" type="text/html">
+    <div class="tab-pane active cont" id={{addRule}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>修改规则</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <h4>规则基本信息</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-2 text-center">
+                    <h5><b>使用条件:</b>订单满减</h5>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-2 text-center">
+                    <h5><b>满减方式:</b>优惠券</h5>
+                </div>
+            </div>
+        </div>
+        <div id="alter_rule" class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">规则名称:</label>
+                        <div class="col-sm-6">
+                            <input id="name" data-name="name" type="text" class="form-control input_nodata"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">规则结束时间:</label>
+                        <div class="col-sm-6">
+                            <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                <input id="endtime" data-name="end_time" class="form-control input_nodata" size="16"
+                                       type="text"
+                                       value="" readonly=""/>
+                                <span class="input-group-addon btn delDate"><span class="fa fa-times"></span></span>
+                                <span class="input-group-addon btn btn-primary"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会员满减次数:</label>
+                        <div class="col-sm-6">
+                            <input id="nums" data-name="limit_nums" type="text" class="form-control mandatory"
+                                   onkeyup="this.value=this.value.replace(/\D/g,'')"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">规则开始时间:</label>
+
+                        <div class="col-sm-6">
+                            <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                <input id="starttime" data-name="start_time" class="form-control mandatory" size="16"
+                                       type="text"
+                                       value="" readonly=""/>
+                                <span class="input-group-addon btn delDate"><span class="fa fa-times"></span></span>
+                                <span class="input-group-addon btn btn-primary"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">订单实付金额:</label>
+
+                        <div class="col-sm-6">
+                            <input id="limit" data-name="limit_amount" type="text" class="form-control mandatory"
+                                   onkeyup="this.value=this.value.replace(/[^\d.]/g,'')">
+                        </div>
+                        <div class="col-sm-6">
+                            <input id="qr_id" data-name="qr_id" type="hidden">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h4>优惠券规则</h4>
+            </div>
+
+            <div class="col-md-1">
+                <button id="newCoupon" class="btn btn-primary addcoupon btn-width">新增规则</button>
+            </div>
+        </div>
+        <div class="row" id="couponDiv"/>
+        <div class="row">
+            <h4>优惠券总额度</h4>
+
+            <div class="col-md-8">
+                <button class="btn btn-default btn-width alert-coupon-value">计算优惠券总额度</button>
+                <input class="coupon-count" type="text" disabled="disabled"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label">
+                <button id="confirm_add" class="btn btn-primary btn-width">确认修改</button>
+            </label>
+            <label class="col-sm-3 control-label">
+                <button id="alert_cancel" class="btn btn-primary btn-width cancel_page">取消</button>
+            </label>
+        </div>
+    </div>
+</script>
+<!-- 新增规则--->
+<script id="tpl-addRule" type="text/html">
+    <div class="tab-pane active cont" id={{addRule}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>新增规则</h3>
+                </div>
+            </div>
+        </div>
+        <div id="create_Rules" class="row">
+            <form class="form-horizontal group-border-dashed" action="#" style="border-radius: 0px;">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">规则名称:</label>
+
+                        <div class="col-sm-6">
+                            <input data-name="name" type="text" class="form-control mandatory">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">规则开始时间:</label>
+
+                        <div class="col-sm-6">
+                            <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                <input data-name="start_date" class="form-control mandatory" size="16" type="text"
+                                       value=""
+                                       readonly="">
+                                <span class="input-group-addon btn delDate"><span class="fa fa-times"></span></span>
+                                <span class="input-group-addon btn btn-primary"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">会员满减次数:</label>
+
+                        <div class="col-sm-6">
+                            <input data-name="limit_nums" type="text" class="form-control mandatory"
+                                   onkeyup="this.value=this.value.replace(/\D/g,'')">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">订单实付金额:</label>
+
+                        <div class="col-sm-6">
+                            <input data-name="limit_amount" type="text" class="form-control mandatory"
+                                   onkeyup="this.value=this.value.replace(/[^\d.]/g,'')">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">规则结束时间:</label>
+
+                        <div class="col-sm-6">
+                            <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                <input data-name="end_date" class="form-control mandatory" size="16" type="text"
+                                       value=""
+                                       readonly="">
+                                <span class="input-group-addon btn delDate"><span class="fa fa-times"></span></span>
+                                <span class="input-group-addon btn btn-primary"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <h5><b>使用条件:</b>订单满减</h5>
+        </div>
+        <div class="row">
+            <h5><b>满减方式:</b>优惠券</h5>
+        </div>
+        <div class="row">
+            <h4>优惠券规则</h4>
+
+            <div class="col-md-1">
+                <button class="btn btn-default newId btn-width">新增规则</button>
+            </div>
+        </div>
+        <div class="row" id="newcouponDiv">
+            <div id="coupon_id" class="col-md-8">
+                <label>优惠券类型ID</label>
+                <input class="ck_id mandatory" data-name="ck_id" type="text"/>
+                <span class="red">满</span>
+                <input class="man_new" type="text" readonly="true"/>
+                <span>元</span>
+                <span class="red">减</span>
+                <input class="jian_new" type="text" readonly="true"/>
+                <span>元</span>
+            </div>
+        </div>
+        <div class="row">
+            <h4>优惠券总额度</h4>
+
+            <div class="col-md-8">
+                <button class="btn btn-default btn-width coupon-value">计算优惠券总额度</button>
+                <input class="coupon-count" type="text" disabled="disabled"/>
+            </div>
+        </div>
+        <div class="row">
+            <label class="col-sm-3 control-label">
+                <Button id="add_items" class="btn btn-primary btn-width">确认新增</Button>
+            </label>
+            <label class="col-sm-3 control-label">
+                <Button display=="none" id="close_item" class="btn btn-primary btn-width">取消</Button>
+            </label>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="couponItems">
+    {{each data as list}}
+    <div class="col-md-9 form-group">
+        <label>优惠券类型ID</label>
+        <input class="ck_id mandatory" data-name="ck_id" type="text" value="{{list.ck_id}}"/>
+        <span class="red">满</span>
+        <input class="man_new" type="text" value="{{list.requirement/100}}" readonly="true"/>
+        <span>元</span>
+        <span class="red">减</span>
+        <input class="jian_new" type="text" value="{{list.value/100}}" readonly="true"/>
+        <span>元</span>
+        <button class="btn btn-default deteleCoupon btn-width">删除</button>
+    </div>
+    {{/each}}
+</script>
+
+<script type="text/html" id="noDatacouponItems">
+    <div class="col-md-9 form-group">
+        <label>优惠券类型ID</label>
+        <input class="ck_id mandatory" data-name="ck_id" type="text"/>
+        <span class="red">满</span>
+        <input class="man_new" type="text" readonly="true"/>
+        <span>元</span>
+        <span class="red">减</span>
+        <input class="jian_new" type="text" readonly="true"/>
+        <span>元</span>
+        <button class="btn btn-default deteleCoupon btn-width">删除</button>
+    </div>
+</script>

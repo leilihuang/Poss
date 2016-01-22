@@ -75,10 +75,10 @@ define(['module'], function (module) {
         },
 
         /**
-         * Parses a resource name into its component parts. Resource names
+         * Parses a service name into its component parts. Resource names
          * look like: module/name.ext!strip, where the !strip part is
          * optional.
-         * @param {String} name the resource name
+         * @param {String} name the service name
          * @returns {Object} with properties "moduleName", "ext" and "strip"
          * where strip is a boolean.
          */
@@ -121,7 +121,7 @@ define(['module'], function (module) {
         /**
          * Is an URL on another domain. Only works for browser use, returns
          * false in non-browser environments. Only used to know if an
-         * optimized .js version of a text resource should be loaded
+         * optimized .js version of a text service should be loaded
          * instead.
          * @param {String} url
          * @returns Boolean
@@ -192,8 +192,8 @@ define(['module'], function (module) {
                     }
                 });
             } else {
-                //Need to fetch the resource across domains. Assume
-                //the resource has been optimized into a JS module. Fetch
+                //Need to fetch the service across domains. Assume
+                //the service has been optimized into a JS module. Fetch
                 //by the module name + extension, but do not include the
                 //!strip part to avoid file system issues.
                 req([nonStripName], function (content) {

@@ -1,8 +1,11 @@
 require(
-    ['jQuery','entries/service/index/index.js'],
-    function ($,Index) {
+    ['jQuery','entries/service/index/index','entries/util/Tip','entries/service/public'],
+    function ($,Index,Tip,Pulic) {
         $(function () {
-            new Index();
+            Pulic.tokenUser(function () {
+                new Index();
+                Tip.init();
+            });
         })
     }
 )

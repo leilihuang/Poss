@@ -13,69 +13,71 @@
 
     <!-- Bootstrap core CSS -->
     <link href="js/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
-
     <link rel="stylesheet" href="fonts/font-awesome-4/css/font-awesome.min.css">
-
+    <link href="css/jquery.gritter.css" rel="stylesheet">
     <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="js/jquery.niftymodals/css/component.css" />
     <link href="css/style.css" rel="stylesheet" />
 
 </head>
-
 <body class="texture">
-
 <div id="cl-wrapper" class="login-container">
-
     <div class="middle-login">
         <div class="block-flat">
             <div class="header">
-                <h3 class="text-center"><img class="logo-img" src="images/logo.png" alt="logo"/>Clean Zone</h3>
+                <h3 class="text-center"><img class="logo-img" src="images/logo.png" alt="logo"/>Poss后台系统</h3>
             </div>
             <div>
-                <form style="margin-bottom: 0px !important;" class="form-horizontal" action="index.html">
-                    <div class="content">
-                        <h4 class="title">Login Access</h4>
+                <div style="margin-bottom: 0px !important;" class="form-horizontal">
+                    <div class="content" id="log_content">
+                        <!--<h4 class="title">登录界面</h4>-->
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" placeholder="Username" id="username" class="form-control">
+                                    <input data-name="login_name" type="text" placeholder="Username" id="username" class="form-control mandatory">
                                 </div>
+                                <span class="errorTip">请输入用户名</span>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                    <input type="password" placeholder="Password" id="password" class="form-control">
+                                    <input data-name="password" type="password" placeholder="Password"  class="form-control mandatory">
                                 </div>
+                                <span class="errorTip">请输入密码</span>
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-circle-o"></i></span>
+                                    <input id="password" data-name="code" type="text" placeholder="登录域" class="form-control mandatory">
+                                </div>
+                                <span class="errorTip">请输入所属域</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="foot">
-                        <button class="btn btn-default" data-dismiss="modal" type="button">Register</button>
-                        <button class="btn btn-primary" data-dismiss="modal" type="submit">Log me in</button>
+                        <!--<button class="btn btn-default" data-dismiss="modal" id="register">注册</button>-->
+                        <button class="btn btn-primary" data-dismiss="modal" id="login">登录</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-        <div class="text-center out-links"><a href="#">&copy; 2013 Your Company</a></div>
+        <div class="text-center out-links"><a href="#">&copy; 2016 ZZT.TM</a></div>
     </div>
-
 </div>
-<!--<script id="requirejs" debug="0"
-        data-main='../../dist/js/login'
-        data-url="http://s.zzt.tm/zzt/"
-        src="http://s.zzt.tm/zzt/lib/require.min.js">
-</script>-->
-<script src="js/jquery.js"></script>
-<script>
-    $(function () {
-        $(".texture").css({
-            opacity: 1,
-            "margin-left": "0px"
-        })
-    })
+<script id="requirejs" debug="0"
+        data-main="../../dist/js/login"
+        data-url="../../entries/lib/"
+        src="../../entries/lib/require.js">
 </script>
+<!--<script id="requirejs" debug="0"
+        data-main="http://10.2.8.115/poss/dist/js/login"
+        data-url="http://10.2.8.115/poss/dist/lib/"
+        src="http://10.2.8.115/poss/dist/lib/require.js">
+</script>-->
 </body>
 </html>

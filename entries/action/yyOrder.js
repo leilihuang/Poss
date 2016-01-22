@@ -1,8 +1,10 @@
 require(
-    ['jQuery','entries/service/order/yyOrder'],
-    function ($, Order) {
+    ['jQuery','entries/service/order/yyOrder','entries/service/public'],
+    function ($, Order,Pulic) {
         $(function () {
-            Order.init()
+            Pulic.tokenUser(function () {
+                Order.init()
+            });
         })
     }
 )

@@ -9,7 +9,7 @@
         </div>
         <div class="row">
             <div class="content">
-                <div id="ck_search" class="form-horizontal group-border-dashed"  style="border-radius: 0px;">
+                <div  class="form-horizontal group-border-dashed ck_search"  style="border-radius: 0px;">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label  class="col-sm-3 control-label">用户名</label>
@@ -22,13 +22,14 @@
                             <div class="col-sm-6">
                                 <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
                                     <input data-name="start_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                    <span class="input-group-addon btn  delDate"><span class="fa  fa-times"></span></span>
                                     <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-3 control-label">
-                                <button class="btn btn-primary tt-search">查询</button>
+                                <button class="btn btn-primary tt-search btn-width">查询</button>
                             </label>
                         </div>
                     </div>
@@ -38,9 +39,9 @@
                                 <label class="col-sm-3 control-label">获得类型</label>
                                 <div class="col-sm-6">
                                     <select  data-name="action_type" class="form-control">
-                                        <option>所有</option>
+                                        <option value="">所有</option>
                                         <option value="0">订单完成</option>
-                                        <option value="1">宝宝生日</option>
+                                        <option value="2">宝宝生日</option>
                                     </select>
                                 </div>
                             </div>
@@ -49,6 +50,7 @@
                                 <div class="col-sm-6">
                                     <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
                                         <input data-name="end_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                        <span class="input-group-addon btn  delDate"><span class="fa  fa-times"></span></span>
                                         <span  class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
                                     </div>
                                 </div>
@@ -60,7 +62,7 @@
 
         </div>
         <div class="row" >
-            <div class="col-md-12  ck-table">
+            <div class="col-md-12  tt-table">
                 <!--表格-->
                 {{include 'tt-table'}}
             </div>
@@ -92,7 +94,7 @@
             {{else if value.action_type=="2"}}
             <td>宝宝生日</td>
             {{else if value.action_type=="8"}}
-            <td>宝宝生日</td>
+            <td>兑换</td>
             {{else if value.action_type==""}}
             <td></td>
             {{/if}}

@@ -1,8 +1,10 @@
 require(
-    ['jQuery','entries/service/rabbit/proportion'],
-    function ($, Proportion) {
+    ['jQuery','entries/service/rabbit/proportion','entries/service/public'],
+    function ($, Proportion,Pulic) {
         $(function () {
-            Proportion.init()
+            Pulic.tokenUser(function () {
+                Proportion.init();
+            });
         })
     }
 )

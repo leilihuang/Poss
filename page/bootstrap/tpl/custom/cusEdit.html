@@ -1,0 +1,187 @@
+<div id="hideCon" style="display: none;"></div>
+<script id="tpl-cusEdit" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>会员状态修改</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="content">
+                <form class="form-horizontal group-border-dashed" action="#" style="border-radius: 0px;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">开始时间 </label>
+                            <div class="col-sm-6">
+                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    <input  class="form-control" size="16" type="text" value="" readonly="" data-name="start_time">
+                                    <span class="input-group-addon btn  del-start-edit"><span class="fa  fa-times"></span></span>
+                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">会员号</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" data-name="ca_code">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">手机</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" data-name="mobile">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">状态</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" data-name="state">
+                                    <option value="">所有</option>
+                                    <option value="0">冻结</option>
+                                    <option value="1">正常</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                <input type="button" class="btn btn-primary btn-width" id="hy-edit" value="查询" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">结束时间 </label>
+                            <div class="col-sm-6">
+                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    <input  class="form-control" size="16" type="text" value="" readonly="" data-name="end_time">
+                                    <span class="input-group-addon btn  del-end-edit"><span class="fa  fa-times"></span></span>
+                                    <span  class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">登录名</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" data-name="login_id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">邮箱</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" data-name="email">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">注册来源</label>
+                            <div class="col-sm-6">
+                                <select class="form-control" data-name="type">
+                                    <option value="">所有</option>
+                                    <option value="0">喆喆兔</option>
+                                    <option value="7">麻花</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="col-md-12 cus-table">
+                {{include 'tpl-tabEdit'}}
+            </div>
+        </div>
+        <div class="row">
+            {{include 'tpl-page'}}
+        </div>
+        <div class="row">
+            <!--修改会员状态（冻结&解冻）-->
+            {{include 'hy-affairs'}}
+            <!--/修改会员状态（冻结&解冻）-->
+        </div>
+    </div>
+
+</script>
+
+<!-- 根据条件查询的会员列表 -->
+<script  id="tpl-tabEdit" type="text/html">
+    <div class="row" >
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead class="btn-primary">
+                <tr>
+                    <th>序号</th>
+                    <th>注册来源</th>
+                    <th>会员号</th>
+                    <th>登录名</th>
+                    <th>手机</th>
+                    <th>邮箱</th>
+                    <th>注册日期</th>
+                    <th>会员状态</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{each list as value i}}
+                <tr>
+                    <td>{{i+1}}</td>
+                    {{if value.type=="7" }}
+                    <td>麻花</td>
+                    {{else}}
+                    <td>喆喆兔</td>
+                    {{/if}}
+                    <td>{{value.ca_code}}</td>
+                    <td>{{value.login_id}}</td>
+                    <td>{{value.mobile}}</td>
+                    <td>{{value.email}}</td>
+                    <td>{{value.create_time}}</td>
+                    {{if value.state=="0" }}
+                    <td>冻结</td>
+                    {{else}}
+                    <td>正常</td>
+                    {{/if}}
+                    <th>{{value.memo2}}</th>
+                    <th><a href="#cus-modify" class="cus-modify">
+                        {{if value.state=="0" }}
+                        解冻
+                        {{else}}
+                        冻结
+                        {{/if}}</a>
+                    </th>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</script>
+<!-- 冻结&解冻会员填写备注窗口-->
+<script id="hy-affairs" type="text/html">
+    <div class="md-modal colored-header custom-width md-effect-9 form-horizontal form-primary  form-affairs" style="perspective: 1300px; height: 482px;">
+        <div class="md-content">
+            <div class="modal-header">
+                <h3>编辑会员状态</h3>
+                <button type="button"id="hy_header_hied" class="close md-close ck_cancel" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div  class="modal-body form ck_modal">
+                <div class="row">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">备注</label>
+                        <div class="col-sm-6">
+                            <textarea data-name="memo2" class="form-control" style="width:300px;height:100px;resize: none;"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="hy_footer_hide"  type="button" class="btn btn-default btn-flat btn-width md-close ck_cancel" data-dismiss="modal">返回</button>
+                <button type="button" class="btn btn-primary btn-flat btn-width md-close hy_submit" data-dismiss="modal">确认</button>
+            </div>
+        </div>
+    </div>
+    <div class="md-overlay"></div>
+</script>
+

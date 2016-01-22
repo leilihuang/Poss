@@ -7,119 +7,141 @@
                 </div>
             </div>
         </div>
+        <form id="queryInfo">
         <div class="row">
             <div class="content">
                 <div id="yy_search" class="form-horizontal group-border-dashed"  style="border-radius: 0px;">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">订单号</label>
-                            <div class="col-sm-6">
-                                <input data-name="po_code" type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">下单时间</label>
-                            <div class="col-sm-6">
+                            <label class="col-sm-4 control-label">下单开始时间</label>
+                            <div class="col-sm-8">
                                 <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
-                                    <input data-name="begin_create_time"  class="form-control" size="16" type="text" value="" readonly="">
-                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
-                                </div>
-                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
-                                    <input data-name="end_create_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                    <input data-name="begin_create_time" name="begin_create_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                    <span class="input-group-addon btn  delDate"><span class="fa  fa-times"></span></span>
                                     <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">商户代码</label>
-                            <div class="col-sm-6">
-                                <input data-name="sa_code"  type="text" class="form-control">
+                            <label class="col-sm-4 control-label">下单结束时间</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    <input data-name="end_create_time" name="end_create_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                    <span class="input-group-addon btn  delDate"><span class="fa  fa-times"></span></span>
+                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">订单状态</label>
+                            <label class="col-sm-4 control-label">完成开始时间</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    <input data-name="end_complete_time" name="end_complete_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                    <span class="input-group-addon btn  delDate"><span class="fa  fa-times"></span></span>
+                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">完成结束时间</label>
+                            <div class="col-sm-8">
+                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                    <input data-name="end_complete_time" name="end_complete_time"  class="form-control" size="16" type="text" value="" readonly="">
+                                    <span class="input-group-addon btn  delDate"><span class="fa  fa-times"></span></span>
+                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <span id="yy-search" class="btn btn-primary btn-width">查询</span>
+                                <button id="yy-export" class="btn btn-success  btn-width">导出</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">订单号</label>
                             <div class="col-sm-6">
-                                <select data-name="state" class="form-control">
+                                <input data-name="po_code"  name="po_code" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">商户代码</label>
+                            <div class="col-sm-6">
+                                <input data-name="sa_code" name="sa_code"  type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">买家登录名</label>
+                            <div class="col-sm-6">
+                                <input data-name="login_id" name="login_id" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">优惠券编码</label>
+                            <div class="col-sm-6">
+                                <input data-name="co_id" name="co_id" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">订单状态</label>
+                            <div class="col-sm-6">
+                                <select data-name="state" name="state" class="form-control">
                                     <option value="">全部</option>
                                     <option value="0">待付款</option>
                                     <option value="1">待发货</option>
                                     <option value="2">已发货</option>
                                     <option value="3">已完成</option>
                                     <option value="9">已关闭</option>
-
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">子订单号</label>
+                            <div class="col-sm-6">
+                                <input data-name="so_code" name="so_code"  type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">商户名称</label>
+                            <div class="col-sm-6">
+                                <input data-name="shop_name" name="shop_name" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">收货人手机号码</label>
+                            <div class="col-sm-6">
+                                <input data-name="peceive_phone" name="peceive_phone" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label">订单来源</label>
+                            <div class="col-sm-6">
+                                <select data-name="origin" name="origin" class="form-control">
+                                    <option value="">所有</option>
+                                    <option value="0">喆喆兔</option>
+                                    <option value="1">麻花</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">收货人手机号码</label>
+                            <label class="col-sm-4 control-label">订单类型</label>
                             <div class="col-sm-6">
-                                <input data-name="peceive_phone"  type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">订单来源</label>
-                            <div class="col-sm-6">
-                                <input data-name="origin"  type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                <button id="yy-search" class="btn btn-primary ">查询</button>
-                                <!--<button id="ck-newAdd" class="btn btn-success ">新增类型</button>-->
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">子订单号</label>
-                            <div class="col-sm-6">
-                                <input data-name="so_code"  type="text" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">订单完成时间</label>
-                            <div class="col-sm-6">
-                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
-                                    <input data-name="begin_complete_time"   class="form-control" size="16" type="text" value="" readonly="">
-                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
-                                </div>
-                                <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
-                                    <input data-name="end_complete_time"   class="form-control" size="16" type="text" value="" readonly="">
-                                    <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">买家登录名</label>
-                                <div class="col-sm-6">
-                                    <input data-name="login_id"  type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">商户名称</label>
-                                <div class="col-sm-6">
-                                    <input data-name="shop_name"  type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">订单类型</label>
-                                <div class="col-sm-6">
-                                    <input data-name="type"  type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">优惠券编码</label>
-                                <div class="col-sm-6">
-                                    <input data-name="co_id"  type="text" class="form-control">
-                                </div>
+                                <select data-name="type" name="type" class="form-control">
+                                    <option value="">所有</option>
+                                    <option value="1">免税订单</option>
+                                    <option value="0">普通订单</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+        </form>
         <div class="row" >
             <div class="col-md-12  yy-table">
                 {{include 'yy-table'}}
@@ -127,14 +149,19 @@
         </div>
         <!--分页-->
         {{include 'tpl-page'}}
+        <div class="row order-items">
+            {{include 'order-item'}}
+        </div>
     </div>
 
 </script>
 <script id="yy-table" type="text/html">
-    <table class="table table-bordered text-centent">
+    <table class="table table-bordered text-centent ">
         <thead class="btn-primary">
         <tr>
             <th>序号</th>
+            <th>订单来源</th>
+            <th>订单类型</th>
             <th>订单号</th>
             <th>子订单号</th>
             <th>订单状态</th>
@@ -144,6 +171,8 @@
             <th>优惠券减免</th>
             <th>专场活动减免</th>
             <th>买家登录名</th>
+            <th>商户代码</th>
+            <th>商户名称</th>
             <th>活动来源</th>
             <th>操作</th>
         </tr>
@@ -151,24 +180,28 @@
         <tbody>
         {{each list as value i}}
         <tr>
-            <th>{{i+1}}</th>
-            <th>{{value.po_code}}</th>
-            <th>{{value.so_code}}</th>
-            <th>{{value.state_name}}</th>
-            <th>{{value.raw_amount}}</th>
-            <th>{{value.raw_cash}}</th>
-            <th>{{value.co_id}}</th>
-            <th>{{value.raw_coupon}}</th>
-            <th>{{value.raw_concessions_discount}}</th>
-            <th>{{value.login_id}}</th>
-            {{if value.origin=="0"}}
-            <th>PC</th>
-            {{else if value.origin=="1"}}
-            <th>WAP</th>
-            {{else if value.origin=="2"}}
-            <th>APP</th>
-            {{/if}}
-            <th><a href="#yydetail" class="yydetail">详情</a></th>
+            <td>{{i+1}}</td>
+            <td>{{value.comePlatformName}}</td>
+            <td>{{value.area_type_name}}</td>
+            <td>{{value.po_code}}</td>
+            <td>{{value.so_code}}</td>
+            <td>{{value.state_name}}</td>
+            <td>{{value.raw_amount}}</td>
+            <td>
+                {{if value.po_state == '0' || value.po_state == '2'}}
+                    -
+                {{else}}
+                    {{value.raw_cash}}
+                {{/if}}
+            </td>
+            <td>{{value.co_id}}</td>
+            <td>{{value.raw_coupon}}</td>
+            <td>{{value.raw_concessions_discount}}</td>
+            <td>{{value.login_id}}</td>
+            <td>{{value.sa_code}}</td>
+            <td>{{value.shop_name}}</td>
+            <td title="{{value.mc_title}}"><div class="ellspis" style="width:60px;">{{value.mc_title}}</div></td>
+            <td><a href="#yydetail" class="yydetail">详情</a>|<a href="#yyOrderItmes" class="yyOrderItmes">明细</a></td>
         </tr>
         {{/each}}
         </tbody>
@@ -269,7 +302,11 @@
                 商品总金额：{{list.raw_amount}} 元<br/>
                 优惠金额： {{list.raw_coupon}}  元<br/>
                 专场活动减免：{{list.raw_concessions_discount}}元<br/>
-                实付总金额：{{list.raw_cash}}
+                实付总金额：  {{if list.po_state == '0' || list.po_state == '2'}}
+                                -
+                              {{else}}
+                              {{list.raw_cash}}
+                                {{/if}}元
     </p>
     </div>
     <div class="tab-pane cont" id="profile">
@@ -306,7 +343,7 @@
             <p>
                 买家({{list.login_id}})已于
                 <strong class="clock">
-                    ({{list.deliver_time}})
+                    ({{list.effect_time}})
                 </strong>
                 付款，请尽快完成发货
             </p>
@@ -328,4 +365,45 @@
             {{/if}}
         </h4>
     </div>
+</script>
+
+<script id="order-item" type="text/html">
+    <div class="md-modal colored-header custom-width md-effect-9 form-horizontal form-primary setEdit" >
+        <div class="md-content">
+            <div class="modal-header">
+                <h3>子订单明细</h3>
+                <button type="button" class="close md-close ck_cancel" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div  class="modal-body form ck_modal">
+                <table  class="table table-bordered">
+                    <tr>
+                        <td>商品图片</td>
+                        <td>商品名称</td>
+                        <td>赠品</td>
+                        <td>规格</td>
+                        <td>规格</td>
+                        <td>单价(元)</td>
+                        <td>数量</td>
+                        <td>商品总价(元)</td>
+                    </tr>
+                    {{each list.order_items as i}}
+                    <tr>
+                        <td><img src="{{i.pic_url}}" width="100px" height="100px"></td>
+                        <td>{{i.p_name}}</td>
+                        <td>{{i.gift_desc}}</td>
+                        <td>{{i.ps_name}}</td>
+                        <td>{{i.pr_no}}</td>
+                        <td>{{i.unit_amount}}</td>
+                        <td>{{i.quantity}}</td>
+                        <td>{{i.raw_amount}}</td>
+                    </tr>
+                    {{/each}}
+                </table>
+            </div>
+            <!--<div class="modal-footer">
+                <button  type="button" class="btn btn-default btn-flat md-close ck_cancel" data-dismiss="modal">关闭</button>
+            </div>-->
+        </div>
+    </div>
+    <div class="md-overlay"></div>
 </script>

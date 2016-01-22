@@ -1,0 +1,184 @@
+<script id="tpl-ruleOrderReturn" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>订单返券信息查询</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row return_form">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">开始时间:</label>
+
+                        <div class="col-sm-6">
+                            <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                <input data-name="start_time" class="form-control" size="16" type="text" value=""
+                                       readonly="">
+                                <span class="input-group-addon btn delDate"><span class="fa fa-times"></span></span>
+                                <span class="input-group-addon btn btn-primary"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">买家账号:</label>
+
+                        <div class="col-sm-6">
+                            <input data-name="customer_number" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">订单号:</label>
+
+                        <div class="col-sm-6">
+                            <input data-name="order_number" type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <Button id="return_search" class="btn btn-primary btn-width">查询</Button>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">结束时间 </label>
+
+                        <div class="col-sm-6">
+                            <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                <input data-name="end_time" class="form-control" size="16" type="text" value=""
+                                       readonly="">
+                                <span class="input-group-addon btn delDate"><span class="fa fa-times"></span></span>
+                                <span class="input-group-addon btn btn-primary"><span
+                                        class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">订单状态:</label>
+
+                        <div class="col-sm-6">
+                            <select data-name="order_state" type="text" class="form-control">
+                                <option value="">全部</option>
+                                <option value="0">待付款</option>
+                                <option value="1">待发货</option>
+                                <option value="2">已发货</option>
+                                <option value="3">已完成</option>
+                                <option value="9">已关闭</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12  ck-table">`
+                <!--表格-->
+                {{include 'full-table'}}
+            </div>
+        </div>
+        <!--分页-->
+        {{include 'tpl-page'}}
+    </div>
+</script>
+<!--表格-->
+<script id="full-table" type="text/html">
+    <table class="table table-bordered text-centent">
+        <thead class="table-head">
+        <tr>
+            <th>序号</th>
+            <th>订单号</th>
+            <th>子订单号</th>
+            <th>订单生成日期</th>
+            <th>订单状态</th>
+            <th>总金额</th>
+            <th>优惠券减免</th>
+            <th>专场活动减免</th>
+            <th>会员减免</th>
+            <th>实付额</th>
+            <th>买家账号</th>
+            <th>是否返券</th>
+            <th>返券规则名称</th>
+            <th>返券信息</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{each list as value i}}
+        <tr>
+            <td>{{i+1}}</td>
+            <td>{{value.poCode}}</td>
+            <td>{{value.soCode}}</td>
+            <td>{{value.createTime}}</td>
+
+            {{if value.state=="0"}}
+            <td>待付款</td>
+            {{/if}}
+            {{if value.state=="1"}}
+            <td>待发货</td>
+            {{/if}}
+            {{if value.state=="2"}}
+            <td>已发货</td>
+            {{/if}}
+            {{if value.state=="3"}}
+            <td>已完成</td>
+            {{/if}}
+            {{if value.state=="9"}}
+                {{if value.poState=="0" || value.poState=="2"}}
+                    <td>已关闭(未付款取消)</td>
+                    {{else if value.poState=="0" && (value.resultCode=='5' || value.resultCode=='8' || value.resultCode=='9') }}
+                    <td>已关闭(已付款取消)</td>
+                    {{else if value.poResultCode=="2" && value.poState == '1'}}
+                    <td>已关闭(逾期支付)</td>
+                    {{else if value.resultCode=="2"}}
+                    <td>已关闭(未收到货退款)</td>
+                    {{else}}
+                    <td></td>
+                {{/if}}
+            {{else}}
+            <td></td>
+            {{/if}}
+
+
+            {{if value.rawAmount}}
+            <td>{{value.rawAmount}}</td>
+            {{else}}
+            <td>0.00</td>
+            {{/if}}
+
+            {{if value.rawCoupon}}
+            <td>{{value.rawCoupon}}</td>
+            {{else}}
+            <td>0.00</td>
+            {{/if}}
+
+            {{if value.rawConcessionsDiscount}}
+            <td>{{value.rawConcessionsDiscount}}</td>
+            {{else}}
+            <td>0.00</td>
+            {{/if}}
+
+            {{if value.rawVipDiscount}}
+            <td>{{value.rawVipDiscount}}</td>
+            {{else}}
+            <td>0.00</td>
+            {{/if}}
+
+            {{if value.poState=='0' || value.poState=='2' }}
+            <td>0.00</td>
+            {{else}}
+            <td>{{value.rawCash}}</td>
+            {{/if}}
+
+            <td>{{value.loginId}}</td>
+            <td>{{value.qrpoCode}}</td>
+            <td>{{value.name}}</td>
+            <td>{{value.memo}}</td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>

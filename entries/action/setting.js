@@ -1,8 +1,10 @@
 require(
-    ['jQuery','entries/service/rabbit/setting'],
-    function ($, Setting) {
+    ['jQuery','entries/service/rabbit/setting','entries/service/public'],
+    function ($, Setting,Pulic) {
         $(function () {
-            Setting.init()
+            Pulic.tokenUser(function () {
+                Setting.init();
+            });
         })
     }
 )

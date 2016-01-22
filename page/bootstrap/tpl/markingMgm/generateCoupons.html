@@ -1,0 +1,94 @@
+<div id="hideCon" style="display: none;"></div>
+<script id="tpl-generateCoupons" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="block-flat">
+                    <div class="header">
+                        <h3>批量生成优惠劵</h3>
+                    </div>
+                    <div class="content">
+                        <form class="form-horizontal group-border-dashed form-coupon" action="#" parsley-validate="" novalidate="">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">优惠券名称:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control sel-ckid" data-name="ck_id">
+                                        <option>请选择优惠劵名称</option>
+                                        {{each list as value i}}
+                                             <option value="{{value.ckId}}">{{value.typeName}}</option>
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">批次名称:</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" data-name="memo">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">优惠券开始日期:</label>
+                                <div class="col-sm-6">
+                                    <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                        <input  class="form-control" size="16" type="text" value="" readonly="" data-name="validity_start">
+                                        <span class="input-group-addon btn  del-validity-start"><span class="fa  fa-times"></span></span>
+                                        <span  class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">数量</label>
+                                <div class="col-sm-6">
+                                    <input parsley-type="number" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" data-name="quantity" id="quantity" class="form-control parsley-validated" required="" placeholder="请输入大于0的数字">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">优惠券类型:</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control apply_limit" data-name="apply_limit">
+                                        <option value="0">全场</option>
+                                        <option value="1">专场</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="apply-ssid" style="display: none" data-name="activity_id" >
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">专场活动编号:</label>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-10">
+                                            <input parsley-type="number" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control parsley-validated" required="" placeholder="请输入活动编号" float="left">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <a href="javaScript:void(0)" class="add-ssid">增加</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="button" class="btn btn-primary btn-width cps-submit">确定</button>
+                                    <button type="button" class="btn btn-primary btn-flat btn-width md-close edit-sub cancelTab">取消</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+
+<script type="text/html" id="addCon">
+    <div class="form-group">
+        <label class="col-sm-3 control-label"></label>
+        <div class="col-sm-6">
+            <div class="col-sm-10">
+                <input parsley-type="number" type="text" onkeyup="this.value=this.value.replace(/\D/g,'')"  class="form-control parsley-validated" required="" placeholder="请输入活动编号">
+            </div>
+            <div class="col-sm-2">
+                <a href="javaScript:void(0)" class="del-ssid">删除</a>
+            </div>
+        </div>
+    </div>
+</script>

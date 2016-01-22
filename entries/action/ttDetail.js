@@ -1,8 +1,10 @@
 require(
-    ['jQuery','entries/service/rabbit/ttDetail'],
-    function ($, Detail) {
+    ['jQuery','entries/service/rabbit/ttDetail','entries/service/public'],
+    function ($, Detail,Pulic) {
         $(function () {
-            Detail.init()
+            Pulic.tokenUser(function () {
+                Detail.init();
+            });
         })
     }
 )

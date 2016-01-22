@@ -1,0 +1,261 @@
+<script id="tpl-roleMg" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>角色管理</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="content">
+                <div  class="form-horizontal group-border-dashed"  style="border-radius: 0px;">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">角色名</label>
+                            <div class="col-sm-6">
+                                <input data-name="user_name" type="text" class="form-control">
+                            </div>
+                        </div>
+                        {{if type=="9"}}
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">域选择</label>
+                                <div class="col-sm-7">
+                                    <select  data-name="action_type" class="form-control addSelect">
+                                        {{each roots as root }}
+                                            {{if root.id!="1"}}
+                                                <option value={{root.id}}>{{root.name}}</option>
+                                            {{/if}}
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        {{/if}}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                <button class="btn btn-primary role-search">查询</button>
+                                <button data-name="roleAdd" class="btn btn-success role-create">添加角色</button>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">获得类型</label>
+                                <div class="col-sm-6">
+                                    <select  data-name="action_type" class="form-control">
+                                        <option value="">全部</option>
+                                        <option value="1">启用</option>
+                                        <option value="0">禁用</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" >
+            <div class="col-md-12  ck-table">
+                <!--表格-->
+                {{include 'role-table'}}
+            </div>
+        </div>
+        <!--分页-->
+        {{include 'tpl-page'}}
+    </div>
+</script>
+<!--表格-->
+<script id="role-table" type="text/html">
+    <table class="table table-bordered text-centent">
+        <thead class="btn-primary">
+        <tr>
+            <th>角色ID</th>
+            <th>角色名</th>
+            <th>状态</th>
+            <th>备注</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{each list as value i}}
+        <tr>
+            <td>{{value.id}}</td>
+            <td>{{value.name}}</td>
+            {{if value.status=="1"}}
+            <td>启用</td>
+            {{else if value.status=="0"}}
+            <td>禁用</td>
+            {{/if}}
+            <td>{{value.remark}}</td>
+            <td>
+                <a href="javascript:void (0)" data-name="roleEdit" class="userEdit">编辑</a>&nbsp;
+                <a href="javascript:void (0)" data-name="userDel" class="userDel">删除</a>
+            </td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>
+<!--新增-->
+<script id="role-add" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>添加角色</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色名</label>
+                        <div class="col-sm-7">
+                            <input type="text" data-name="name" class="form-control parsley-validated mandatory"  placeholder="角色名">
+                        </div>
+                        <span class="errorTip">*必填字段</span>
+                    </div>
+                    {{if type=="9"}}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">域选择</label>
+                            <div class="col-sm-7">
+                                <select  data-name="action_type" class="form-control addSelect">
+                                    {{each roots as root }}
+                                        {{if root.id!="1"}}
+                                            <option value={{root.id}}>{{root.name}}</option>
+                                        {{/if}}
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色编码</label>
+                        <div class="col-sm-7">
+                            <input type="text" data-name="code"  class="form-control parsley-validated mandatory"  placeholder="角色编码，唯一，必须以ROLE_开头:ROLE_EMPLOYEE">
+                        </div>
+                        <span class="errorTip">*必填字段</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色描述</label>
+                        <div class="col-sm-7">
+                            <input type="text" data-name="remark" class="form-control parsley-validated"  placeholder="具有登录，注销，录入加班申请，录入调休申请 权限">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-horizontal  add-domain">
+                    {{include 'add-domain'}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-success domain-update-submit-btn sub-success" style="width: 100px;"><i class="fa fa-check"></i> 提 交</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="add-domain">
+    {{each data as list}}
+    <div class="col-md-3 col-sm-3">
+        <div class="form-group">
+            <label class="col-sm-8 control-label">{{list.name}}</label>
+            <div class="col-sm-4">
+                <div class="switch" data-on="success">
+                    <input  data-value={{list.id}} type="checkbox">
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>
+<!--编辑角色信息-->
+<script id="role-edit" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>修改角色信息</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色名</label>
+                        <div class="col-sm-7">
+                            <input type="text" data-name="name" class="form-control parsley-validated mandatory" value="{{data.name}}"  placeholder="角色名">
+                            <span class="errorTip">*必填字段</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">状态选择</label>
+                        <div class="col-sm-7">
+                            <select  data-name="status" class="form-control addSelect">
+                                <option value="2" {{if data.status==="0"}}  selected = "selected" {{/if}} >禁止</option>
+                                <option value="1" {{if data.status==="1"}}  selected = "selected" {{/if}} >启用</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <div class="form-horizontal" role="form" parsley-validate="" novalidate="">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色编码</label>
+                        <div class="col-sm-7">
+                            <input type="text" data-name="code"  class="form-control parsley-validated mandatory" value={{data.code}}  placeholder="角色编码，唯一，尽量以ROLE_开头:ROLE_EMPLOYEE">
+                            <span class="errorTip">*必填字段</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">角色描述</label>
+                        <div class="col-sm-7">
+                            <input type="text" data-name="remark" class="form-control parsley-validated" value={{data.remark}}    placeholder="具有登录，注销，录入加班申请，录入调休申请 权限">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-horizontal  add-domain">
+                    {{include 'edit-domain'}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-success domain-update-submit-btn sub-success" style="width: 100px;"><i class="fa fa-check"></i> 提 交</button>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" id="edit-domain">
+    {{each root as val}}
+    <div class="col-md-3 col-sm-3">
+        <div class="form-group">
+            <label class="col-sm-8 control-label">{{val.name}}</label>
+            <div class="col-sm-4">
+                <div class="switch" data-on="success">
+                    <input  data-value={{val.id}} type="checkbox"  {{if val.rootType=="1"}} checked {{/if}}>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+
+</script>

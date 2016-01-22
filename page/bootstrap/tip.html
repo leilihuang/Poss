@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>提示信息</title>
+    <link href="js/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/font-awesome-4/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="js/jquery.gritter/css/jquery.gritter.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="js/jquery.niftymodals/css/component.css" />
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/loaders.css" rel="stylesheet" />
+</head>
+<body style="opacity: 1; margin-left: 0px;">
+    <div class="cl-mcont">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <div class="block-flat">
+                    <div class="header">
+                        <h3>Colors</h3>
+                    </div>
+                    <div class="content">
+                        <p>You can choose between use the basic <b>Gritter Notification</b> style or our theme based notification, just have fun with them.</p>
+                        <div class="spacer2 text-center">
+                            <button id="not-primary" class="btn btn-primary">Primary</button>
+                            <button id="not-success" class="btn btn-success">Green</button>
+                            <button id="not-info" class="btn btn-info">Blue</button>
+                            <button id="not-warning" class="btn btn-warning">Orange</button>
+                            <button id="not-danger" class="btn btn-danger">Red</button>
+                            <button id="not-dark" class="btn btn-github bg">Dark</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="block-flat">
+                    <div class="header">
+                        <h3>Modal Alerts</h3>
+                    </div>
+                    <div class="content">
+                        <h4>Examples</h4>
+                        <p>This is just an example of tooltip in a paragrhap content writen by <a data-toggle="tooltip" href="#" data-original-title="Default tooltip">Jeff Hanneman</a>, as you can see it is a clean design with many <a data-toggle="tooltip" href="#" data-original-title="I am a Tooltip">Tooltip</a> options.</p>
+                        <div class="spacer2 text-center">
+                            <button data-toggle="modal" data-target="#mod-success" type="button" class="btn btn-success"><i class="fa fa-check"></i> Success</button>
+                            <button data-toggle="modal" data-target="#mod-info" type="button" class="btn btn-primary"><i class="fa fa-info-circle"></i> Information</button>
+                            <button data-toggle="modal" data-target="#mod-warning" type="button" class="btn btn-warning"><i class="fa fa-warning"></i> Warning</button>
+                            <button data-toggle="modal" data-target="#mod-error" type="button" class="btn btn-danger"><i class="fa fa-times-circle"></i> Error</button>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="mod-success" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="text-center">
+                                            <div class="i-circle success"><i class="fa fa-check"></i></div>
+                                            <h4>Awesome!</h4>
+                                            <p>Changes has been saved successfully!</p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-success" data-dismiss="modal">Proceed</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="mod-info" tabindex="-1" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="text-center">
+                                            <div class="i-circle primary"><i class="fa fa-check"></i></div>
+                                            <h4>Awesome!</h4>
+                                            <p>Changes has been saved successfully!</p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Proceed</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="mod-warning" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="text-center">
+                                            <div class="i-circle warning"><i class="fa fa-warning"></i></div>
+                                            <h4>Warning!</h4>
+                                            <p>Something is going wrong here...</p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-warning" data-dismiss="modal">Proceed</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="mod-error" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="text-center">
+                                            <div class="i-circle danger"><i class="fa fa-times"></i></div>
+                                            <h4>Oh god!</h4>
+                                            <p>You're by your own now, good luck!</p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Proceed</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="color: #9988cd" class="la-ball-spin-clockwise-fade-rotating la-3x">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <script id="requirejs" debug="0"
+            data-main="../../dist/js/index"
+            data-url="../../entries/lib/"
+            src="../../entries/lib/require.js"></script>
+    <script type="text/javascript" src="js/jquery.gritter/js/jquery.gritter.js"></script>
+</body>
+</html>

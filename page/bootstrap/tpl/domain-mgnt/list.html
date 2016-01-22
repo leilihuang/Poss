@@ -1,0 +1,179 @@
+<script id="tpl-domain-mgnt-list" type="text/html">
+
+    <div class="pageContentList">
+
+        <div class="cl-mcont" style="padding: 0px 0px 0px 0px;">
+
+
+            <div class="row" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
+                <div class="col-sm-12 col-md-12" style="padding: 0px;">
+                    <div class="page-aside table-filter-aside app filters">
+                        <div>
+                            <div class="app-nav collapse">
+                                <div class="content">
+                                    <div class="form-group">
+                                        <label class="control-label">根据 名称:</label>
+
+                                        <input name="filter-param-name" data-ng-model="filterParam.name" class="form-control" size="16"
+                                               type="text" value="">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">根据 编码:</label>
+
+                                        <input name="filter-param-code" class="form-control" size="16" type="text" value="">
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">根据 状态:</label>
+
+                                        <select name="filter-param-status" class="form-control">
+                                            <option value="">全部</option>
+                                            <option value="1">启用</option>
+                                            <option value="0">禁用</option>
+                                        </select>
+
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <a class="btn btn-primary btn-sm domain-filter-param-reset-btn"
+                                           style="width: 100px;">重 置</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="container-fluid table-content" id="pcont" style="width: 100%;">
+                        <div class="main-app">
+                            <div class="filters table-filters" style="padding-top: 15px;">
+
+                                <a class="btn btn-success btn-sm md-trigger domain-create-btn"
+                                   style="width: 100px;">新 建 域</a>
+
+                                <div class="btn-group pull-right page-bar">
+                                    <a class="btn btn-sm btn-flat btn-default page-first-btn"><i class="fa fa-angle-double-left"></i></a>
+                                    <a class="btn btn-sm btn-flat btn-default page-prev-btn"><i class="fa fa-angle-left"></i></a>
+                                    <a class="btn btn-sm btn-flat btn-default page-refresh-btn">0 / 0</a>
+                                    <a class="btn btn-sm btn-flat btn-default page-next-btn"><i class="fa fa-angle-right"></i></a>
+                                    <a class="btn btn-sm btn-flat btn-default page-last-btn"><i class="fa fa-angle-double-right"></i></a>
+                                </div>
+
+                                <!--<div class="btn-group pull-right">-->
+                                    <!--<button data-toggle="dropdown"-->
+                                            <!--class="btn btn-sm btn-flat btn-default dropdown-toggle" type="button">-->
+                                        <!--排 序 <span class="caret"></span>-->
+                                    <!--</button>-->
+                                    <!--<ul role="menu" class="dropdown-menu">-->
+                                        <!--<li><a href="#">编码</a></li>-->
+                                        <!--<li><a href="#">状态</a></li>-->
+                                        <!--<li class="divider"></li>-->
+                                        <!--<li><a href="#">默认</a></li>-->
+                                    <!--</ul>-->
+                                <!--</div>-->
+
+
+                            </div>
+                            <div class="item" style="position: relative; height: 33px; padding-top: 5px; background-color: #eee;">
+                                <div style="position: absolute; left: 10px; width: 150px;padding-bottom: 6px;">
+                                    <strong>#名称</strong>
+                                </div>
+                                <div style="position: absolute; left: 160px; width: 150px;padding-bottom: 6px;">
+                                    <strong>#编码</strong>
+                                </div>
+                                <div style="position: absolute; left: 310px; width: 50px;margin-top: 2px;">
+                                    <strong>#状态</strong>
+                                </div>
+                            </div>
+                            <div class="domain-list">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <!-- Modal : delete warning -->
+        <div class="modal fade" id="domain-delete-warning-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <div class="i-circle danger"><i class="fa fa-warning"></i></div>
+                            <h4>警告!</h4>
+                            <p>删除该域将同时删除域下的所有用户及角色,确定要删除么?</p>
+                            <p style="color: #e64d35;"><span class="domain-name">市场部</span> <span class="domain-code">marketing</span></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                        <button type="button" class="btn btn-danger domain-delete-submit-btn">给 我 删</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+
+
+        </div>
+
+
+    </div>
+
+</script>
+
+
+<script id="tpl-domain-mgnt-list-area" type="text/html">
+
+    <div class="items products">
+
+        {{each list as item i}}
+        <div class="item" style="position: relative; height: 58px;">
+            <div style="position: absolute; left: 10px; width: 150px;padding-bottom: 6px;">
+                <span style="font-size: 1.1em;">{{ item.name }}</span>
+            </div>
+            <div style="position: absolute; left: 160px; width: 150px;padding-bottom: 6px;">
+                <strong>{{ item.code }}</strong>
+            </div>
+            <div style="position: absolute; left: 310px; width: 50px;margin-top: 2px;">
+                {{if item.status == '1'}}
+                <i style="font-size: 20px; color: #65ca65;" class="fa fa-check-circle-o"></i>
+                {{else}}
+                <i style="font-size: 20px; color: #DF4B33;" class="fa fa-ban"></i>
+                {{/if}}
+
+            </div>
+
+            {{if item.type == '1'}}
+            <div style="position: absolute;right: 155px;width: 2px;border-right: 1px solid #EEEEEE;height: 30px;top: 14px;">
+            </div>
+            <div style="position: absolute; right: 0px; top: 17px; width: 135px;">
+
+                <button data-domain-id="{{ item.id }}" type="button" class="btn btn-default btn-xs domain-edit-btn"
+                        style="width: 50px; display: inline-block;">编 辑
+                </button>
+                <button data-domain-id="{{ item.id }}" type="button" class="btn btn-danger btn-xs domain-delete-btn"
+                        style="width: 50px; display: inline-block;">删 除
+                </button>
+            </div>
+            {{/if}}
+
+
+
+        </div>
+        {{/each}}
+
+    </div>
+
+</script>

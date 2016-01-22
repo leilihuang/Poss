@@ -1,6 +1,38 @@
-<h1>{{title}}</h1>
-<ul>
-    {{each list as value i}}
-    <li>索引 {{i + 1}} ：{{value}}</li>
-    {{/each}}
-</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <title>Clean Zone</title>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,400italic,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,200,100' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap core CSS -->
+    <link href="js/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="fonts/font-awesome-4/css/font-awesome.min.css">
+    <link href="css/jquery.gritter.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="js/jquery.niftymodals/css/component.css" />
+    <link href="css/style.css" rel="stylesheet" />
+
+</head>
+<body class="texture">
+<script id="requirejs" debug="0"
+        data-main="../../dist/js/login"
+        data-url="../../entries/lib/"
+        src="../../entries/lib/require.js">
+</script>
+</body>
+<script id="test"  type="text/html">
+    <h1>{{title}}</h1>
+    <ul>
+        {{each list as value i}}
+        <li>索引 {{i + 1}} ：{{value}}</li>
+        {{/each}}
+    </ul>
+</script>
+</html>

@@ -1,222 +1,220 @@
 define(
-    ['jQuery','entries/lib/ui/class','template'],
-    function ($,Class,template) {
+    ['jQuery', 'entries/lib/ui/class', 'template', 'entries/util/util'],
+    function ($, Class, template, Util) {
         var id = "couponBatchsQuery";
         var editId = "couponBatchsEdit";
-        var search=Class.create({
+        var baseUrl = "/marketing/coupon-batchs";
+        var search = Class.create({
             setOptions: function (opts) {
-                var options={
-                    tabs:$("#nav_tabs"),
-                    tabCom:$("#tab-content"),
-                    ck_search:$("#ck-search"),
-                    ck_newAdd:$("#ck-newAdd"),
-                    hideCon:$("#hideCon"),
-                    status:0,
-                    user:null,
-                    bool:false
+                var options = {
+                    tabs: $("#nav_tabs"),
+                    tabCom: $("#tab-content"),
+                    hideCon: $("#hideCon"),
+                    url: "/marketing/coupon-batchs",
+                    status: 0,
+                    total: 0,
+                    $this: null,
+                    user: null,
+                    bool: false
                 };
-                $.extend(true,this,options,opts);
+                $.extend(true, this, options, opts);
             }
-        },{
+        }, {
             init: function (opts) {
                 this.setOptions(opts);
                 this.layout();
             },
             bindEval: function () {
-                if(this.status==0){
+                if (this.status == 0) {
+                    this.user = $("#"+id);
+                    this.status = 1;
                     Poss.dateTime();
-                    this.loadAdd(this);
                     this.loadSerach(this);
+                    this.delDate();
                     this.cancel(this);
-                    this.submit(this);
-                    this.status=1;
+                    this.page();
                 }
             },
+            /**
+             * 第一个参数传递分页的容器
+             * @url 分页接口
+             * */
+            page: function () {
+                var pageCom = this.user.find(".pagination"),
+                    pre = pageCom.find(".prev"),
+                    next = pageCom.find(".next"),
+                    number = pageCom.find(".number"),
+                    _this = this;
+                Util.pageDemo(pageCom);
+                next.on("click", function () {
+                    var d = _this.searchVild();
+                    Util.nextPage(pageCom, _this.url, d, function (data) {
+                        _this.tableLoad(data);
+                    });
+                });
+                pre.on("click", function () {
+                    var d = _this.searchVild();
+                    Util.prePage(pageCom, _this.url, d, function (data) {
+                        _this.tableLoad(data);
+                    });
+                });
+                number.find("input").on("keyup", function (event) {
+                    var d = _this.searchVild();
+                    Util.enterEval(pageCom, event, $(this), _this.url, d, function (data) {
+                        _this.tableLoad(data);
+                    });
+                });
+                Util.totals = this.total;
+                Util.setTotal(this.total);
+            },
+            tableLoad: function (data) {
+                var html = template('couponBatchs-table', {list: data});
+                var $table = this.user.find(".couponBatchs-table");
+                this.user.find(".couponBatchs-table").empty();
+                this.edit(html, $table);
+            },
             layout: function () {
-                var _this=this;
+                var _this = this;
                 this.loadDate(function (html) {
                     _this.tabCom.find(".active").removeClass('active');
-                    _this.edit(html,_this.tabCom);
+                    _this.edit(html, _this.tabCom);
                     _this.bindEval();
                 });
             },
             loadDate: function (callBack) {
-                $.ajax({
-                    url:Poss.baseUrl("/marketing/coupon-batchs"),
-                    type:"GET",
-                    dataType:"json",
-                    contentType:"application/json",
-                    success: function (date) {
-                        var $div=$('<div></div>');
+                var _this = this;
+                Poss.ajaxBack(Poss.baseUrl(_this.url), "GET", {
+                    last_cursor: "0",
+                    count: Poss.count
+                }, this.user, function (d, xhr) {
+                    if (d.status == 0) {
+                        _this.total = xhr.getResponseHeader("X-Total-Count");
+                        var $div = $('<div></div>');
                         $('body').append($div);
-                        var data={
-                            list:date,
-                            href:id
+                        var data = {
+                            list: d.data,
+                            href: id
                         };
                         $div.load('tpl/markingMgm/couponBatchsQuery.html', function () {
-                            var h=template('tpl-couponBatchsQuery',data);
+                            var h = template('tpl-couponBatchsQuery', data);
                             callBack(h);
                         });
-                    },
-                    error: function () {
-                        var h=Poss.errorDate("接口调用失败","couponBatchsQuery");
-                        callBack(h);
 
+                    } else {
+                        Poss.errorDate("接口调用失败，请刷新页面",id);
                     }
+                });
+            },
+            /**清除时间日期*/
+            delDate: function () {
+                $(".delDate").on("click", function () {
+                    $(this).parents(".input-group").find("input").val("");
                 });
             },
             //查询
             loadSerach: function (_this) {
                 $("#couponBatchs-button").on("click", function () {
-                       _this.searchVild(function (date) {
-                       _this.loadEdit(date,_this);
-                    });
+                    var d = _this.searchVild();
+                    Util.initPage(d);
+                    _this.loadEdit(d, _this);
                 });
             },
-            loadEdit: function (date) {
-                var _this=this;
-                $.ajax({
-                    url:Poss.baseUrl('/marketing/coupon-batchs'),
-                    type:'GET',
-                    dataType:'json',
-                    contentType:'application/json',
-                    data:date,
-                    success: function (data) {
-                        var html=template('couponBatchs-table',{list:data});
-                        $("#"+id).find(".couponBatchs-table").empty();
-                        var $table=$("#"+id).find(".couponBatchs-table");
-                        _this.edit(html,$table);
+            loadEdit: function (date, _this) {
+                Poss.ajaxBack(Poss.baseUrl(_this.url), "GET", date, this.user, function (d, xhr) {
+                    if (d.status == 0) {
+                        _this.total = xhr.getResponseHeader("X-Total-Count");
+                        var pageCom = $("#"+id).find(".pagination"),
+                            number = pageCom.find(".number"),
+                            total = pageCom.find(".total");
+                        number.find("input").val(1);
+                        _this.tableLoad(d.data);
+                        Util.setTotal(_this.total);
+                    } else {
+                        Poss.isDeBug("接口调用失败", 1);
                     }
                 });
             },
-            searchVild: function (callback) {
-                var date={},ck_search=$("#couponBatchs_query")
-                ck_search.find(":text").each(function () {
-                    date[$(this).attr("data-name")]=$(this).val();
+            searchVild: function () {
+                var date = {};
+                this.user.find(":text").each(function () {
+                    if ($(this).val() != '') {
+                        date[$(this).attr("data-name")] = $(this).val();
+                    }
                 });
-                Poss.selectVal(ck_search,date);
-                callback(date);
-            },
-            //新增
-            loadAdd: function (_this) {
-                $("#ck-newAdd").on("click", function () {
-                    _this.modelShow();
-                });
+                Poss.selectVal(this.user, date);
+                return date;
             },
             //修改内容
-            edit: function (html,$table) {
-                var _this=this;
-                $(html).find(".edits").each(function () {
+            edit: function (html, $table) {
+                var _this = this;
+                $(html).find(".couponGerRule_export").each(function () {
                     $(this).on('click', function () {
-                        var text=$(this).text(),href=$(this).attr('href'),
-                            batch_no=$(this).parents("tr").find("td").eq(1).text();
+                        var ck_id = $(this).parents("tr").find("td").eq(1).text();
                         _this.tabs.find("a").each(function (i) {
-                            if(href==$(this).attr("href")){
-                                _this.user=$(this);
-                                _this.bool=true;
+                            window.location.href=Poss.baseUrl(_this.url)+"/export/"+ck_id+"?auth_token="+ document.cookie.split(";")[0].split("=")[1];
+                        });
+                    })
+                }).end().find(".couponGerRule_edit").each(function () {
+                    $(this).on('click', function () {
+                        var text = $(this).text(), href = $(this).attr('href'),
+                            ck_id = $(this).parents("tr").find("td").eq(1).text();
+                        _this.tabs.find("a").each(function (i) {
+                            if (href == $(this).attr("href")) {
+                                _this.$this = $(this);
+                                _this.bool = true;
                             }
-                            if(i== _this.tabs.find("a").length-1){
-                                _this.isTab(text,batch_no);
+                            if (i == _this.tabs.find("a").length - 1) {
+                                _this.isTab(text, ck_id);
                             }
                         });
                     })
                 }).end().appendTo($table);
             },
-            isTab: function (text,batch_no) {
-                var _this=this,
-                    html=template('tpl-tab',{
-                        text:text,
-                        href:editId
-                    });
-                if(_this.bool){
-                    var i=_this.user.parent().index();
-                    _this.tabs.find("li").eq(i).addClass("active").siblings(".active").removeClass("active");
-                    _this.tabCom.find(".tab-pane").eq(i).addClass("active").siblings(".active").removeClass("active");
-                    _this.tplCon(batch_no,0);
-                }else{
-                    _this.tabs.find(".active").removeClass('active');
-                    $(html).find(".fa-times").on('click', function () {
-                        var i=$(this).parents("li").index();
-                        if($(this).parents("li").hasClass('active')){
-                            _this.delTab(i,true,"ckEdit");
-                        }else{
-                            _this.delTab(i,false,"ckEdit");
-                        }
-                        return false;
-                    }).end().find("a").on("click", function () {
-                        _this.tabCom.find(editId).addClass("active").siblings(".active").removeClass("active");
-                    }).end().appendTo( _this.tabs);
-                    _this.tplCon(batch_no);
-                }
-                _this.bool=false;
-
+            isTab: function (text, ck_id) {
+                var _this = this;
+                Util.isTab(text, '#'+editId, this.bool, this.$this, function (status) {
+                    if (status == 0) {
+                        _this.tplCon(ck_id, 0);
+                    } else {
+                        _this.tplCon(ck_id);
+                    }
+                });
+                this.bool = false;
             },
-            tplCon: function (batch_no,status) {
-                var url="/marketing/coupon-batchs/"+batch_no,_this=this;
-                $.ajax({
-                    url:Poss.baseUrl(url),
-                    type:"GET",
-                    dataType:"JSON",
-                    contentType:"application/json",
-                    success: function (data) {
-                        if(status==0){
-                            var h=template('editUp',{
-                                list:data
+            tplCon: function (ck_id, status) {
+                var _this = this;
+                var url = baseUrl +"/" + ck_id
+                Poss.ajaxBack(Poss.baseUrl(url), "GET", {}, this.user, function (d, xhr) {
+                    if (d.status == 0) {
+                        if (status == 0) {
+                        /*    var h = template('editUp', {
+                                list: d.data
                             });
-                            _this.tabCom.find("#ckEdit").find(".editUp").empty();
-                            _this.tabCom.find("#ckEdit").find(".editUp").append(h);
-                        }else{
-                            var h=template('tpl-ckEdit',{
-                                editHref:'ckEdit',
-                                list:data
+                            _this.tabCom.find("#"+editId).find(".editUp").empty();
+                            _this.tabCom.find("#"+editId).find(".editUp").append(h);*/
+                        } else {
+                            var h = template('tpl-couponBatchsEdit', {
+                                editHref: editId,
+                                list: d.data
                             });
                             _this.tabCom.find('.active').removeClass('active');
                             $(h).find(".edit-cen").on("click", function () {
-
+                                _this.delTab($("#"+editId).index(), true, editId);
                             }).end().find(".edit-sub").on("click", function () {
                                 _this.editSub();
                             }).end().appendTo(_this.tabCom);
                         }
-                    },
-                    error: function () {
-
+                    } else {
+                        Poss.isDeBug("接口调用失败", 1);
                     }
                 });
             },
-            editSub: function () {
-                var _this=this;
-                this.editVail(function (data) {
-                    var  url="/marketing/coupon-kinds/"+data["ck_id"];
-                    $.ajax({
-                        url:Poss.baseUrl(url),
-                        type:"PUT",
-                        dataType:"json",
-                        data:Poss.isJson(data),
-                        contentType:"application/json",
-                        success: function (data) {
-                            var i=_this.tabs.find(".active").index();
-                            _this.delTab(i,true,"ckEdit");
-                            _this.loadEdit();
-                        },
-                        error: function () {
-
-                        }
-                    })
-                });
-            },
-            editVail: function (callback) {
-                var date={},ck_modal=$("#ckEdit").find(".editUp");
-                Poss.inputVal(ck_modal,date);
-                Poss.radioVal(ck_modal,date);
-                Poss.selectVal(ck_modal,date);
-                callback(date);
-            },
-            delTab: function (i,bool,href) {
-                var tabs_li=this.tabs.find('li'),
-                    panel=this.tabCom.find("#"+href);
+            delTab: function (i, bool, href) {
+                var tabs_li = this.tabs.find('li'),
+                    panel = this.tabCom.find("#" + href);
                 tabs_li.eq(i).remove();
                 this.hideCon.append(panel);
-                if(bool){
+                if (bool) {
                     this.tabs.find('li').eq(0).addClass("active");
                     this.tabCom.find('.tab-pane').eq(0).addClass("active");
                 }
@@ -227,53 +225,22 @@ define(
                     _this.modelHide();
                 });
             },
-            //提交
-            submit: function (_this) {
-                $("#ck_submit").on("click", function () {
-                    _this.validInp(function (date) {
-                        $.ajax({
-                            url:Poss.baseUrl("/marketing/coupon-kinds"),
-                            type:"POST",
-                            data:date,
-                            dataType:'json',
-                            contentType:"application/json",
-                            success: function (date) {
-                                _this.layout();
-                                _this.modelHide();
-                            },
-                            error: function (error) {
-                                console.log(error);
-                            }
-                        })
-                    });
-                });
-            },
-            //新增数据
-            validInp: function (callback) {
-                var date={},ck_modal=$("#ck_modal");
-                Poss.inputVal(ck_modal,date);
-                Poss.radioVal(ck_modal,date);
-                Poss.selectVal(ck_modal,date);
-                var text=ck_modal.find("textarea");
-                date[text.attr("data-name")]=text.val();
-                callback(Poss.isJson(date));
-            },
             //弹出层显示
             modelShow: function () {
-                $("#form-primary").addClass("md-show").css("perspective","none");
+                Util.modelShow(this.user);
             },
             //弹出层隐藏
             modelHide: function () {
-                $("#form-primary").removeClass("md-show").css("perspective","1300px");
+                Util.modelHide(this.user);
             }
         });
-        var s=null;
+        var s = null;
         return {
             init: function () {
-                if(s!=null){
+                if (s != null) {
                     s.layout();
-                }else{
-                    s=new search();
+                } else {
+                    s = new search();
                 }
             }
         };

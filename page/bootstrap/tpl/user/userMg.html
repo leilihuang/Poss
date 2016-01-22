@@ -1,0 +1,300 @@
+<script id="tpl-userMg" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>用户管理</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="content">
+                <div class="form-horizontal group-border-dashed"  style="border-radius: 0px;">
+                    <div class="col-md-6">
+<!--                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">用户名</label>
+                            <div class="col-sm-6">
+                                <input data-name="user_name" type="text" class="form-control">
+                            </div>
+                        </div>-->
+                        {{if type=="9"}}
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">域选择</label>
+                                <div class="col-sm-7">
+                                    <select  data-name="domainId" class="form-control addSelect">
+                                        {{each roots as root }}
+                                            {{if root.id!="1"}}
+                                                 <option value={{root.id}}>{{root.name}}</option>
+                                            {{/if}}
+                                        {{/each}}
+                                    </select>
+                                </div>
+                            </div>
+                        {{/if}}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                <button class="btn btn-primary user-search">查询</button>
+                                <button data-name="userAdd" class="btn btn-success user-create">创建新用户</button>
+                            </label>
+                            <div class="col-sm-8">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-12">
+<!--                            <div class="form-group">
+                                <label  class="col-sm-3 control-label">用户姓名</label>
+                                <div class="col-sm-6">
+                                    <input data-name="user_name" type="text" class="form-control">
+                                </div>
+                            </div>-->
+<!--                            <div class="form-group">
+                                <label class="col-sm-3 control-label">获得类型</label>
+                                <div class="col-sm-6">
+                                    <select  data-name="action_type" class="form-control">
+                                        <option value="">全部</option>
+                                        <option value="1">启用</option>
+                                        <option value="2">禁用</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row" >
+            <div class="col-md-12  ck-table">
+                <!--表格-->
+                {{include 'user-table'}}
+            </div>
+        </div>
+        <!--分页-->
+        {{include 'tpl-page'}}
+    </div>
+</script>
+<!--表格-->
+<script id="user-table" type="text/html">
+    <table class="table table-bordered text-centent">
+        <thead class="btn-primary">
+        <tr>
+            <th>用户ID</th>
+            <th>账号</th>
+            <th>用户姓名</th>
+            <th>部门</th>
+            <th>状态</th>
+            <th>用户级别</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{each list as value i}}
+        <tr>
+            <td>{{value.id}}</td>
+            <td>{{value.login_name}}</td>
+            <td>{{value.name}}</td>
+            <td>{{value.domain.name}}</td>
+
+            {{if value.status=="1"}}
+            <td>启用</td>
+            {{else if value.status=="2"}}
+            <td>禁用</td>
+            {{/if}}
+
+            {{if value.type=="1"}}
+            <td>普通用户</td>
+            {{else if value.type=="8"}}
+            <td>管理员</td>
+            {{else}}
+            <td>超级管理员</td>
+            {{/if}}
+            <td>
+                {{if type=="9"}}
+                    {{if value.type!="9"}}
+                        <a href="javascript:void (0)" data-name="userEdit" class="userEdit">编辑</a>&nbsp;
+                        <a href="javascript:void (0)" data-name="userDel" class="userDel">删除</a>&nbsp;
+                    {{/if}}
+                {{else}}
+                    {{if value.type!="9" && value.type!="8"}}
+                        <a href="javascript:void (0)" data-name="userEdit" class="userEdit">编辑</a>&nbsp;
+                        <a href="javascript:void (0)" data-name="userDel" class="userDel">删除</a>&nbsp;
+                    {{/if}}
+                {{/if}}
+            </td>
+        </tr>
+        {{/each}}
+        </tbody>
+    </table>
+</script>
+<!--新增-->
+<script id="user-add" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>创建用户</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">用户登录名</label>
+                        <div class="col-sm-7">
+                            <input data-name="login_name" type="text" class="form-control mandatory">
+                        </div>
+                        <span class="errorTip">*必填字段</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户姓名</label>
+                        <div class="col-sm-7">
+                            <input data-name="name" type="text" class="form-control mandatory">
+                        </div>
+                        <span class="errorTip">*必填字段</span>
+                    </div>
+                    {{if type=="9"}}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">域选择</label>
+                        <div class="col-sm-7">
+                            <select  data-name="action_type" class="form-control addSelect">
+                                {{each roots as root }}
+                                    {{if root.id!="1"}}
+                                         <option value={{root.id}}>{{root.name}}</option>
+                                    {{/if}}
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    {{/if}}
+                </div>
+                <div class="col-md-6">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label  class="col-sm-3 control-label">登录密码</label>
+                            <div class="col-sm-7">
+                                <input data-name="password" type="password" class="form-control mandatory">
+                            </div>
+                            <span class="errorTip">*必填字段</span>
+                        </div>
+                        {{if type=="9"}}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">域管理选择</label>
+                            <div class="col-sm-7">
+                                <select  data-name="type" class="form-control addSelect">
+                                    <option value="1">普通用户</option>
+                                    <option value="8">域管理员</option>
+                                </select>
+                            </div>
+                        </div>
+                        {{else}}
+                        <div class="form-group" style="display: none">
+                            <label class="col-sm-3 control-label">域选择</label>
+                            <div class="col-sm-7">
+                                <select  data-name="type" class="form-control addSelect">
+                                    <option value="1">普通用户</option>
+                                </select>
+                            </div>
+                        </div>
+                        {{/if}}
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注</label>
+                            <div class="col-sm-7">
+                                <input data-name="remark" type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-success domain-update-submit-btn sub-success" style="width: 100px;"><i class="fa fa-check"></i> 提 交</button>
+            </div>
+        </div>
+    </div>
+</script>
+<!--修改用户信息-->
+<script id="user-edit" type="text/html">
+    <div class="tab-pane active cont" id={{href}}>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="header">
+                    <h3>修改用户信息</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-horizontal">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label  class="col-sm-3 control-label">用户登录名</label>
+                        <div class="col-sm-6">
+                            <input data-name="login_name" type="text" class="form-control mandatory" value={{data.login_name}}>
+                            <span class="errorTip">*必填字段</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">用户姓名</label>
+                        <div class="col-sm-6">
+                            <input data-name="name" type="text" class="form-control mandatory" value={{data.name}}>
+                            <span class="errorTip">*必填字段</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    {{if type=="9"}}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">域管理选择</label>
+                        <div class="col-sm-6">
+                            <select  data-name="type" class="form-control addSelect">
+                                <option value="1" {{if data.type=="1"}} selected {{/if}}>普通用户</option>
+                                <option value="8" {{if data.type=="8"}} selected {{/if}}>域管理员</option>
+                            </select>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="form-group" style="display: none">
+                        <label class="col-sm-3 control-label">域选择</label>
+                        <div class="col-sm-7">
+                            <select  data-name="type" class="form-control addSelect">
+                                <option value="1">普通用户</option>
+                            </select>
+                        </div>
+                    </div>
+                    {{/if}}
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">备注</label>
+                        <div class="col-sm-6">
+                            <input data-name="remark" type="text" class="form-control" value={{data.remark}}>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            {{include "user-domain"}}
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-success domain-update-submit-btn sub-success" style="width: 100px;"><i class="fa fa-check"></i> 提 交</button>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/html" id="user-domain">
+    {{each list as d}}
+    <div class="col-md-3 col-sm-3">
+        <div class="form-group">
+            <label class="col-sm-6 control-label text-right">{{d.name}}</label>
+            <div class="col-sm-4">
+                <div class="switch" data-on="success">
+                    <input  data-value={{d.id}} type="checkbox" {{if d.type=="0"}} checked {{/if}}>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</script>

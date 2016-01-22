@@ -28,9 +28,17 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">优惠券名称：</label>
                             <div class="col-sm-6">
-                                <input data-name="ck_id" type="text" class="form-control">
+                                <input data-name="name" type="text" class="form-control">
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                <button id="coupons-button" class="btn btn-primary  btn-width">查询</button>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
                         <div class="form-group">
                             <label class="col-sm-3 control-label">状态</label>
                             <div class="col-sm-6">
@@ -46,17 +54,12 @@
                         <div class="form-group">
                             <label class="col-sm-3 control-label">优惠券类型（使用范围）：</label>
                             <div class="col-sm-6">
-                                <select data-name="state" class="form-control">
+                                <select data-name="apply_limit" class="form-control">
                                     <option value="">请选择优惠券类型</option>
                                     <option value="0">全场通用券</option>
                                     <option value="1">专场优惠券</option>
                                 </select>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                <button id="coupons-button" class="btn btn-primary ">查询</button>
-                            </label>
                         </div>
                     </div>
                 </div>
@@ -76,7 +79,7 @@
 <!--表格-->
 <script id="coupons-table" type="text/html">
     <table class="table table-bordered text-centent">
-        <thead class="btn-primary">
+        <thead class="table-head">
         <tr>
             <th>序号</th>
             <th>批次号</th>
@@ -91,26 +94,26 @@
         <tbody>
         {{each list as value i}}
         <tr>
-            <th>{{i+1}}</th>
-            <th>{{value.batch_no}}</th>
-            <th>{{value.co_id}}</th>
-            <th>{{value.memo}}</th>
-            <th>{{value.type_name}}</th>
+            <td>{{i+1}}</td>
+            <td>{{value.batch_no}}</td>
+            <td>{{value.co_id}}</td>
+            <td>{{value.memo}}</td>
+            <td>{{value.type_name}}</td>
             {{if value.apply_limit=="0"}}
-            <th>通用券</th>
+            <td>全场通用券</td>
             {{else if value.apply_limit=="1"}}
-            <th>定向券</th>
+            <td>专场通用券</td>
             {{/if}}
             {{if value.state=="0"}}
-            <th>未发放</th>
+            <td>未发放</td>
             {{else if value.state=="1"}}
-            <th>已发放</th>
+            <td>已发放</td>
             {{else if value.state=="2"}}
-            <th>已使用</th>
+            <td>已使用</td>
             {{else if value.state=="3"}}
-            <th>已失效</th>
+            <td>已失效</td>
             {{/if}}
-            <th>{{value.validity_start}} -- {{value.validity_end}}</th>
+            <td>{{value.validity_start}} -- {{value.validity_end}}</td>
         </tr>
         {{/each}}
         </tbody>

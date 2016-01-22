@@ -1,0 +1,104 @@
+<script id="tpl-domain-mgnt-create" type="text/html">
+
+    <div class="pageContentCreate">
+
+        <form class="form-horizontal group-border-dashed" action="#" parsley-validate novalidate>
+
+            <div class="form-group">
+                <div class="col-sm-12" style="text-align: center;">
+                    <h3 class="hthin">创 建 域</h3>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">编码</label>
+                <div class="col-sm-6">
+                    <input name="code" pattern="^[a-z_0-9]+$" type="text" parsley-trigger="change" required class="form-control" placeholder="由小写字母数字及下划线组成">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">名称</label>
+                <div class="col-sm-6">
+                    <input name="name" pattern="^[_a-zA-Z0-9\u4e00-\u9fa5]+$" type="text" parsley-trigger="change" required  class="form-control" placeholder="由中文字母及数字组成">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">状态</label>
+                <div class="col-sm-6">
+                    <span style="color: #54A754; margin-top: 7px; display: block;">启用</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">类型</label>
+                <div class="col-sm-6">
+                    <span style="margin-top: 7px; display: block;">普通</span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注</label>
+                <div class="col-sm-6">
+                    <textarea name="remark" class="form-control" style="height: 100px;"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="content col-sm-offset-2 col-sm-8 domain-create-resource-list">
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default domain-create-cancel-btn"
+                            style="width: 100px;"><i class="fa fa-caret-left"></i> 取 消
+                    </button>
+                    <button class="btn btn-success domain-create-submit-btn"
+                            style="width: 100px;"><i class="fa fa-check"></i> 提 交
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+    </div>
+
+</script>
+
+<script id="tpl-domain-mgnt-create-resource" type="text/html">
+
+    <table class="no-border">
+        <thead class="no-border">
+        <tr>
+            <th style="width:30px;"></th>
+            <th>资 源</th>
+        </tr>
+        </thead>
+        <tbody class="no-border-y">
+
+        {{each list as item i}}
+
+            <tr>
+                <td class="text-right" width="30">
+                    <div class="switch switch-small"><input name="resourceIds" value="{{ item.id }}" type="checkbox"/></div>
+                </td>
+                <td style="text-align: left; padding-left: 32px;">
+                    <strong>{{ item.name }}</strong>
+                    <div>{{ item.verb }} {{ item.uri_pattern }}</div>
+                </td>
+            </tr>
+
+        {{/each}}
+
+        </tbody>
+    </table>
+
+</script>

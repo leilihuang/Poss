@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="author" content="" />
@@ -11,11 +13,17 @@
     <link href="http://fonts.googleapis.com/css?family=Raleway:100" rel="stylesheet" type="text/css" />
     <link href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700" rel="stylesheet" type="text/css" />-->
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="js/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="fonts/font-awesome-4/css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="js/bootstrap.datetimepicker/css/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" type="text/css" href="js/jquery.niftymodals/css/component.css" />
+    <link href="css/fuelux.css" rel="stylesheet">
+    <link href="css/fuelux-responsive.min.css" rel="stylesheet">
+    <link href="css/jquery.gritter.css" rel="stylesheet">
+    <link href="css/bootstrap-switch.css" rel="stylesheet">
+    <link href="js/jquery.icheck/skins/square/blue.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet" />
+    <link href="css/loaders.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -45,13 +53,13 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right user-nav">
                 <li class="dropdown profile_menu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a  id="userDetail" href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img alt="Avatar" src="images/avatar2.jpg" />
-                        <span>Admin</span> <b class="caret"></b>
+                        <span class="user">Admin</span> <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">修改密码</a></li>
-                        <li><a href="#">退出</a></li>
+                        <!--<li><a href="#">修改密码</a></li>-->
+                        <li><a href="#" id="indexExit">退出</a></li>
                     </ul>
                 </li>
             </ul>
@@ -67,76 +75,18 @@
         <div class="cl-navblock">
             <div class="menu-space">
                 <div class="content">
-                    <div class="side-user">
+<!--                    <div class="side-user">
                         <div class="avatar">
                             <img src="images/avatar1_50.jpg" alt="Avatar" />
                         </div>
                         <div class="info">
-                            <a href="#">Admin</a>
+                            <a href="#" class="user"></a>
                             <img src="images/state_online.png" alt="Status" />
-                            <span>Online</span>
+                            <span class="section"></span>
                         </div>
-                    </div>
-                    <ul class="cl-vnavigation">
-                        <li class="parent">
-                            <a href="#" class="parent"><i class="fa fa-home"></i><span>后台管理</span></a>
-                            <ul class="sub-menu">
-                                <li >
-                                    <a href="#" class="parent"><i class="fa fa-folder-o"></i><span>会员管理</span></a>
-                                    <ul class="sub-menu leve2" style="display: none" data-name="huiyuan">
-                                        <li><a class=" text-center tab" href="#xxSearch">会员信息查询</a></li>
-                                        <li><a class=" text-center tab" href="#xxEdit">会员状态修改</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#" class="parent"><i class="fa fa-folder-o"></i><span>营销管理</span></a>
-                                    <ul class="sub-menu leve2" style="display: none" data-name="markingMgm">
-                                        <li><a class=" text-center tab" href="#ckSearch">优惠券规则管理</a></li>
-                                        <li><a class=" text-center tab" href="#couponsQuery">优惠券券号查询</a></li>
-                                        <li><a class=" text-center tab" href="#couponBatchsQuery">优惠券批次查询</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#" class="parent"><i class="fa fa-folder-o"></i><span>交易管理</span></a>
-                                    <ul class="sub-menu leve2" style="display: none" data-name="order">
-                                        <li><a class=" text-center tab" href="#yyOrder">订单管理</a></li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="#" class="parent"><i class="fa fa-folder-o"></i><span>兔兔币</span></a>
-                                    <ul class="sub-menu leve2" style="display: none" data-name="rabbit">
-                                        <li><a class=" text-center tab" href="#ttDetail">兔兔币收入明细查询</a></li>
-                                        <li><a class=" text-center tab" href="#Exchange">兔兔币兑换明细查询</a></li>
-                                        <li><a class=" text-center tab" href="#setting">兔兔币策略设置</a></li>
-                                        <li><a class=" text-center tab" href="#proportion">兔兔币兑换现金券比例</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="parent">
-                            <ul class="sub-menu">
-                                <li>
-                                    <ul class="sub-menu" style="display: none">
-                                        <li><a class="text-right tab" href="#home">用户管理</a></li>
-                                        <li><a class="text-right tab" href="#profile">用户角色分配</a></li>
-                                        <li><a class="text-center tab" href="#profiled">操作员管理</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="parent">
-                            <a href="#" class="parent"><i class="fa fa-home"></i><span>系统管理</span></a>
-                            <ul class="sub-menu">
-                                <li>
-                                    <a href="#" class="parent text-center"><i class="fa fa-folder-o"></i><span>用户管理</span></a>
-                                    <ul class="sub-menu" style="display: none">
-                                        <li><a class="text-right tab" href="#home">用户管理</a></li>
-                                        <li><a class="text-right tab" href="#profile">用户角色分配</a></li>
-                                        <li><a class="text-center tab" href="#profiled">操作员管理</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
+                    </div>-->
+                    <ul class="cl-vnavigation" id="treeMenu" style="padding-bottom: 100px;">
+
                     </ul>
                 </div>
             </div>
@@ -145,21 +95,168 @@
     <div class="container-fluid" id="pcont">
         <div class="tab-container">
             <ul id="nav_tabs" class="nav nav-tabs">
-
             </ul>
             <div id="tab-content" class="tab-content">
-
             </div>
         </div>
     </div>
 </div>
+<!--loding提示-->
+<div id="Tips" class="Tips"  >
+    <div style="color: #9988cd" class="la-ball-spin-clockwise-fade-rotating la-3x londing">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <div class="overflay"></div>
+</div>
+
+<!--<div class="content">
+    <button class="btn btn-primary btn-flat md-trigger" data-modal="md-3dRotateRight"> 3D Rotate Right</button>
+    <div class="md-modal md-effect-15" id="md-3dRotateRight" style="perspective: 1300px; height: 316px;">
+        <div class="md-content">
+            <div class="modal-header">
+                <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="i-circle primary"><i class="fa fa-warning"></i></div>
+                    <h4 class="model_title">提示信息</h4>
+                    <p class="mode_con">Changes has been saved successfully!</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn-flat md-close" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary btn-flat md-close" data-dismiss="modal">Proceed</button>
+            </div>
+        </div>
+    </div>
+    <div class="md-overlay"></div>
+</div>-->
 <div id="tpl"></div>
 <div id="hideCon" style="display: none;"></div>
+<script id="index-tpl" type="text/html">
+    {{if type=="9" || type=="8"}}
+        <li class="parent">
+            <a href="javascript:void(0);" class="parent"><i class="fa fa-home"></i><span>系统管理</span></a>
+            <ul class="sub-menu leve2">
+                <li>
+                    <a href="javascript:void(0);" class="parent"><i class="fa fa-folder-o"></i><span>用户管理</span></a>
+                    <ul class="sub-menu leve2" style="display: none">
+                        <li><a class="text-center tab" data-name="userMg" href="javascript:void(0);">用户管理</a></li>
+                        <li><a class="text-center tab" data-name="roleMg" href="javascript:void(0);">角色管理</a></li>
+                    </ul>
+                </li>
+                {{if type=="9"}}
+                <li>
+                    <a href="javascript:void(0);" data-name="domain-mgnt" class="tab"><i class="fa fa-sitemap"></i><span>域管理</span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0);" data-name="system-log" class="tab"><i class="fa fa-eye"></i><span>系统日志</span></a>
+                </li>
+                {{/if}}
+            </ul>
+        </li>
+    {{/if}}
+    <li class="parent">
+        <a href="javascript:void(0);" class="parent"><i class="fa fa-home"></i><span>后台管理</span></a>
+        <ul class="sub-menu" id="parents-index">
+            {{if data[0].menusType}}
+            <li >
+                <a href="javascript:void(0);" class="parent"><i class="fa fa-folder-o"></i><span>会员管理</span></a>
+                <ul class="sub-menu leve2" style="display: none" data-name="huiyuan">
+                    {{if data[0].menus[0].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="cusSearch">会员信息查询</a></li>
+                    {{/if}}
+                    {{if data[0].menus[1].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="cusEdit">会员状态修改</a></li>
+                    {{/if}}
+                </ul>
+            </li>
+            {{/if}}
+
+            {{if data[1].menusType}}
+            <li>
+                <a href="javascript:void(0);" class="parent"><i class="fa fa-folder-o"></i><span>营销管理</span></a>
+                <ul class="sub-menu leve2" style="display: none" data-name="markingMgm">
+                    {{if data[1].menus[0].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="ckSearch">优惠券类型管理</a></li>
+                    {{/if}}
+                    {{if data[1].menus[1].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="couponsQuery">优惠券券号查询</a></li>
+
+                    {{/if}}
+                    {{if data[1].menus[2].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="generateCoupons">批量生成优惠劵</a></li>
+                    {{/if}}
+                    {{if data[1].menus[3].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="couponBatchsQuery">优惠券批次查询</a></li>
+                    {{/if}}
+                    {{if data[1].menus[4].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="couponGetRulesQuery">优惠券规则管理</a></li>
+                    {{/if}}
+                </ul>
+            </li>
+            {{/if}}
+            {{if data[2].menusType}}
+            <li>
+                <a href="javascript:void(0);" class="parent"><i class="fa fa-money"></i><span>交易管理</span></a>
+                <ul class="sub-menu leve2" style="display: none" data-name="order">
+                    {{if data[2].menus[0].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="yyOrder">订单管理</a></li>
+                    {{/if}}
+                </ul>
+            </li>
+            {{/if}}
+            {{if data[3].menusType}}
+            <li>
+                <a href="javascript:void(0);" class="parent"><i class="fa fa-folder-o"></i><span>兔兔币</span></a>
+                <ul class="sub-menu leve2" style="display: none" data-name="rabbit">
+                    {{if data[3].menus[0].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="ttDetail">兔兔币收入明细查询</a></li>
+                    {{/if}}
+                    {{if data[3].menus[1].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="Exchange">兔兔币兑换明细查询</a></li>
+                    {{/if}}
+                    {{if data[3].menus[2].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="setting">兔兔币策略设置</a></li>
+                    {{/if}}
+                    {{if data[3].menus[3].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="proportion">兔兔币兑换现金券比例</a></li>
+                    {{/if}}
+                </ul>
+            </li>
+            {{/if}}
+            {{if data[4].menusType}}
+            <li>
+                <a href="javascript:void(0);" class="parent"><i class="fa fa-folder-o"></i><span>双11大促</span></a>
+                <ul class="sub-menu leve2" style="display: none" data-name="rabbit">
+                    {{if data[4].menus[0].types}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="ruleSetting"><i class="fa fa-cog"></i><span>大促规则设置</span></a></li>
+                    {{/if}}
+                    {{if data[4].menus[1].types==true}}
+                    <li><a class=" text-center tab" href="javascript:void(0);" data-name="ruleOrderReturn"><i class="fa fa-search"></i><span>订单返券查询</span></a></li>
+                    {{/if}}
+                </ul>
+            </li>
+            {{/if}}
+        </ul>
+    </li>
+</script>
+
 <script id="requirejs" debug="0"
         data-main="../../dist/js/index"
         data-url="../../entries/lib/"
         src="../../entries/lib/require.js"></script>
-
+<!--<script id="requirejs" debug="0"
+        data-main="http://10.2.8.115/poss/dist/js/index"
+        data-url="http://10.2.8.115/poss/dist/lib/"
+        src="http://10.2.8.115/poss/dist/lib/require.js"></script>-->
 
 <!--<script type="text/javascript" src="js/jquery.js"></script>-->
 <!--<script src="../../node_modules/art-template/dist/template.js"></script>-->

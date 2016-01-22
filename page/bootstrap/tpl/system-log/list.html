@@ -1,0 +1,254 @@
+<script id="tpl-system-log-list" type="text/html">
+
+    <div class="pageContentList">
+
+        <div class="cl-mcont" style="padding: 0px 0px 0px 0px;">
+
+
+            <div class="row" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;">
+                <div class="col-sm-12 col-md-12" style="padding: 0px;">
+                    <div class="page-aside table-filter-aside app filters">
+                        <div>
+                            <div class="app-nav collapse">
+                                <div class="content">
+                                    <div class="form-group">
+                                        <label class="control-label">根据 域编码:</label>
+
+                                        <input name="filter-param-domain-code" class="form-control" size="16"
+                                               type="text" value="">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">根据 资源标识:</label>
+
+                                        <input name="filter-param-resource-id" class="form-control" size="16" type="text" value="">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">根据 请求URI (模糊):</label>
+
+                                        <input name="filter-param-request-uri" class="form-control" size="16" type="text" value="">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">根据 请求实体 (模糊):</label>
+
+                                        <input name="filter-param-request-entity" class="form-control" size="16" type="text" value="">
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">根据 起始时间:</label>
+
+                                        <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                            <input name="filter-param-start-time"  class="form-control" size="16" type="text" value="" readonly="">
+                                            <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">根据 截止时间:</label>
+
+                                        <div class="input-group date datetime " data-min-view="2" data-date-format="yyyy-mm-dd">
+                                            <input name="filter-param-end-time"  class="form-control" size="16" type="text" value="" readonly="">
+                                            <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+
+                                        <a class="btn btn-primary btn-sm log-filter-param-reset-btn"
+                                           style="width: 100px;">重 置</a>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="container-fluid table-content" id="pcont" style="width: 100%;">
+                        <div class="main-app">
+                            <div class="filters table-filters" style="padding-top: 15px; height: 59px;">
+
+                                <div class="btn-group pull-right page-bar">
+                                    <a class="btn btn-sm btn-flat btn-default page-first-btn"><i class="fa fa-angle-double-left"></i></a>
+                                    <a class="btn btn-sm btn-flat btn-default page-prev-btn"><i class="fa fa-angle-left"></i></a>
+                                    <a class="btn btn-sm btn-flat btn-default page-refresh-btn">0 / 0</a>
+                                    <a class="btn btn-sm btn-flat btn-default page-next-btn"><i class="fa fa-angle-right"></i></a>
+                                    <a class="btn btn-sm btn-flat btn-default page-last-btn"><i class="fa fa-angle-double-right"></i></a>
+                                </div>
+
+                            </div>
+
+                            <div class="item" style="position: relative; height: 33px; padding-top: 5px; background-color: #eee;">
+                                <div style="position: absolute; left: 10px; width: 160px;padding-bottom: 6px;">
+                                    <strong>#操作时间</strong>
+                                </div>
+                                <div style="position: absolute; left: 170px; width: 300px;padding-bottom: 6px;">
+                                    <strong>#资源名</strong>
+                                </div>
+                                <div style="position: absolute; left: 470px; width: 130px;margin-top: 2px;">
+                                    <strong>#操作员姓名</strong>
+                                </div>
+                                <div style="position: absolute; left: 600px; width: 150px;margin-top: 2px;">
+                                    <strong>#所属域</strong>
+                                </div>
+
+                            </div>
+
+                            <div class="log-list">
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade colored-header" id="log-detail-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                    <div class="modal-header" style="height: 45px;">
+                        <span style="position: absolute; font-size: 15px;">日志详细</span>
+                        <button type="button" class="close md-close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+                    </div>
+                    <div class="modal-body">
+
+
+                        <table class="no-border">
+                            <tbody class="no-border-x no-border-y">
+                            <tr>
+                                <td style="width:20%; text-align: right;"><strong>日志标识</strong></td>
+                                <td style="text-align: left;"><span class="id"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>操作员标识</strong></td>
+                                <td style="text-align: left;"><span class="operator_id"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>操作员登录名</strong></td>
+                                <td style="text-align: left;"><span class="operator_login_name"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>操作员姓名</strong></td>
+                                <td style="text-align: left;"><span class="operator_name"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>域标识</strong></td>
+                                <td style="text-align: left;"><span class="domain_id"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>域编码</strong></td>
+                                <td style="text-align: left;"><span class="domain_code"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>域名城</strong></td>
+                                <td style="text-align: left;"><span class="domain_name"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>资源标识</strong></td>
+                                <td style="text-align: left;"><span class="resource_id"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>资源名</strong></td>
+                                <td style="text-align: left;"><span class="resource_name"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>资源操作动词</strong></td>
+                                <td style="text-align: left;"><span class="resource_verb"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>资源URI模式</strong></td>
+                                <td style="text-align: left;"><span class="resource_uri_pattern"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>请求URI</strong></td>
+                                <td style="text-align: left;"><span class="request_uri" style="word-break:break-all;"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>请求实体</strong></td>
+                                <td style="text-align: left;"><span class="request_entity" style="word-break:break-all;"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>客户端IP</strong></td>
+                                <td style="text-align: left;"><span class="ip"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>记录时间</strong></td>
+                                <td style="text-align: left;"><span class="create_time"></span></td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-weidht: bold; text-align: right;"><strong>耗时</strong></td>
+                                <td style="text-align: left;"><span class="cost"></span></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+
+                    </div>
+
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+
+
+    </div>
+
+</script>
+
+
+<script id="tpl-system-log-list-area" type="text/html">
+
+    <div class="items products">
+
+        {{each list as item i}}
+        <div class="item" style="position: relative; height: 58px;" data-log-id="{{ item.id }}">
+
+            <div style="position: absolute; left: 10px; width: 160px;padding-bottom: 6px;">
+                <span style="font-size: 0.8em;">{{ item.create_time | syslogDateFormat }}</span>
+            </div>
+            <div style="position: absolute; left: 170px; width: 300px;padding-bottom: 6px;">
+                <strong>{{ item.resource.name }}</strong>
+            </div>
+            <div style="position: absolute; left: 470px; width: 130px;margin-top: 2px;">
+                {{ item.operator.name }}
+            </div>
+            <div style="position: absolute; left: 600px; width: 150px;margin-top: 2px;">
+                {{ item.domain.name }}
+            </div>
+
+        </div>
+        {{/each}}
+
+    </div>
+
+</script>

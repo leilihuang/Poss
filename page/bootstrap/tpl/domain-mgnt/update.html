@@ -1,0 +1,107 @@
+<script id="tpl-domain-mgnt-update" type="text/html">
+
+    <div class="pageContentUpdate">
+
+        <form class="form-horizontal group-border-dashed" action="#" parsley-validate novalidate>
+
+            <div class="form-group">
+                <div class="col-sm-12" style="text-align: center;">
+                    <h3 class="hthin">编 辑 域</h3>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">编码</label>
+                <div class="col-sm-6">
+                    <input name="code" value="{{ domain.code }}" type="text" parsley-trigger="change" required class="form-control" placeholder="由小写字母及下划线组成">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">名称</label>
+                <div class="col-sm-6">
+                    <input name="name" value="{{ domain.name }}" type="text" parsley-trigger="change" required  class="form-control" placeholder="由中文字母组成">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">状态</label>
+                <div class="col-sm-6">
+                    <select name="status" class="form-control">
+                        <option value="1" {{if domain.status == '1'}}selected{{/if}}>启用</option>
+                        <option value="0" {{if domain.status == '0'}}selected{{/if}}>禁用</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label">类型</label>
+                <div class="col-sm-6">
+                    <span style="margin-top: 7px; display: block;">普通</span>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">备注</label>
+                <div class="col-sm-6">
+                    <textarea name="remark" class="form-control" style="height: 100px;">{{ domain.remark }}</textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="content col-sm-offset-2 col-sm-8 domain-update-resource-list">
+
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button class="btn btn-default domain-update-cancel-btn"
+                            style="width: 100px;"><i class="fa fa-caret-left"></i> 取 消
+                    </button>
+                    <button class="btn btn-success domain-update-submit-btn"
+                            style="width: 100px;"><i class="fa fa-check"></i> 提 交
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    </div>
+    </div>
+    </div>
+
+
+    </div>
+
+</script>
+
+<script id="tpl-domain-mgnt-update-resource" type="text/html">
+
+    <table class="no-border">
+        <thead class="no-border">
+        <tr>
+            <th style="width:30px;"></th>
+            <th>资 源</th>
+        </tr>
+        </thead>
+        <tbody class="no-border-y">
+
+        {{each list as item i}}
+
+            <tr>
+                <td class="text-right" width="30">
+                    <div class="switch switch-small"><input name="resourceIds" value="{{ item.id }}" type="checkbox" {{if item.isAssigned == '1'}} checked {{/if}} /></div>
+                </td>
+                <td style="text-align: left; padding-left: 32px;">
+                    <strong>{{ item.name }}</strong>
+                    <div>{{ item.verb }} {{ item.uri_pattern }}</div>
+                </td>
+            </tr>
+
+        {{/each}}
+
+        </tbody>
+    </table>
+
+</script>

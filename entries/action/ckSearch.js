@@ -1,8 +1,10 @@
 require(
-    ['jQuery','entries/service/marke/ckSearch'],
-    function ($, CkSearch) {
+    ['jQuery','entries/service/marke/ckSearch','entries/service/public'],
+    function ($, CkSearch,Pulic) {
         $(function () {
-            CkSearch.init()
+            Pulic.tokenUser(function () {
+                CkSearch.init();
+            });
         })
     }
 )

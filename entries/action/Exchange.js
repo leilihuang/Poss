@@ -1,8 +1,10 @@
 require(
-    ['jQuery','entries/service/rabbit/Exchange'],
-    function ($, Exchange) {
+    ['jQuery','entries/service/rabbit/Exchange','entries/service/public'],
+    function ($, Exchange,Pulic) {
         $(function () {
-            Exchange.init()
+            Pulic.tokenUser(function () {
+                Exchange.init();
+            });
         })
     }
 )

@@ -20,7 +20,7 @@
                         <div class="form-group">
                             <label  class="col-sm-3 control-label">批次名称：</label>
                             <div class="col-sm-6">
-                                <input data-name="ck_id" type="memo" class="form-control">
+                                <input data-name="memo" type="text" class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
@@ -29,42 +29,44 @@
                                 <input data-name="type_name" type="text" class="form-control">
                             </div>
                         </div>
-
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">
+                                <button id="couponBatchs-button" class="btn btn-primary btn-width">查询</button>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">有效期：</label>
+                                <label class="col-sm-2 control-label">有效期：</label>
                                 <div class="col-sm-4">
-                                    <div class="input-group date datetime col-md-5 col-xs-7" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd - HH:ii" data-link-field="dtp_input1">
+                                    <div class="input-group date datetime col-md-8 col-xs-8"  data-min-view="2"  data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
                                         <input class="form-control" size="16" type="text" value="" readonly="" data-name="validity_start">
+                                        <span class="input-group-addon btn  delDate"><span class="fa  fa-times"></span></span>
                                         <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
                                     </div>
                                 </div>
                                 <div class="col-sm-1">到</div>
                                 <div class="col-sm-4">
-                                    <div class="input-group date datetime col-md-5 col-xs-7" data-date="1979-09-16T05:25:07Z" data-date-format="yyyy-mm-dd - HH:ii" data-link-field="dtp_input1">
+                                    <div class="input-group date datetime col-md-8 col-xs-8" data-min-view="2" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
                                         <input class="form-control" size="16" type="text" value="" readonly="" data-name="validity_end">
+                                        <span class="input-group-addon btn  delDate"><span class="fa  fa-times"></span></span>
                                         <span class="input-group-addon btn btn-primary"><span class="glyphicon glyphicon-th"></span></span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">优惠券类型：</label>
+                            <label class="col-sm-2 control-label">优惠券适用范围：</label>
                             <div class="col-sm-6">
-                                <select data-name="state" class="form-control">
-                                    <option value="1">正常</option>
-                                    <option value="0">冻结</option>
+                                <select data-name="apply_limit" class="form-control">
+                                    <option value="">请选择优惠券类型</option>
+                                    <option value="0">全场通用券</option>
+                                    <option value="1">专场优惠券</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">
-                                <button id="couponBatchs-button" class="btn btn-primary ">查询</button>
-                            </label>
-                            <label class="col-sm-3 control-label">
-                                <button id="ck-newAdd" class="btn btn-success ">新增类型</button>
-                            </label>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -78,102 +80,12 @@
         </div>
         <!--分页-->
         {{include 'tpl-page'}}
-        <!--新增-->
-        {{include 'newAdd'}}
-        <!--/新增-->
     </div>
-</script>
-<!--/新增-->
-<script id="newAdd" type="text/html">
-    <div class="md-modal colored-header custom-width md-effect-9 form-horizontal" id="form-primary" style="perspective: 1300px; height: 482px;">
-        <div class="md-content">
-            <div class="modal-header">
-                <h3>新增优惠券类型</h3>
-                <button type="button" class="close md-close ck_cancel" data-dismiss="modal" aria-hidden="true">&times;</button>
-            </div>
-            <div id="ck_modal" class="modal-body form">
-                <div class="row">
-                    <div class="form-group ">
-                        <label class="col-sm-3 control-label">优惠券名称</label>
-                        <div class="col-sm-6">
-                            <input data-name="type_name" type="text" class="form-control"  />
-                        </div>
-                        <span class="red">*</span>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">使用条件</label>
-                        <div class="col-sm-6">
-                            <label class="col-sm-2 control-label">满</label>
-                            <div class="col-sm-3">
-                                <input data-name="requirement" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control" type="text"/>
-                            </div>
-                            <label class="col-sm-1 control-label">元</label>
-                            <label class="col-sm-2 control-label">减</label>
-                            <div class="col-sm-3">
-                                <input data-name="value" onkeyup="this.value=this.value.replace(/\D/g,'')" class="form-control" type="text"/>
-                            </div>
-                            <label class="col-sm-1 control-label">元</label>
-                        </div>
-                        <span class="red">*</span>
-                    </div>
-                    <div class="form-group ">
-                        <label class="col-sm-3 control-label">有效天数</label>
-                        <div class="col-sm-6">
-                            <input data-name="days" onkeyup="this.value=this.value.replace(/\D/g,'')" type="text" class="form-control"  />
-                            <span class="help-block alert-danger">1即为一天有效期，例如有效期从2015-05-20早上到2015-05-20晚上也视作1天</span>
-                        </div>
-                        <span class="red">*</span>
-                    </div>
-                    <div class="form-group ">
-                        <label class="col-sm-3 control-label">是否绑定使用人</label>
-                        <div class="col-sm-6">
-                            <label class="radio-inline"> <input type="radio" value="0" checked="" name="limit_person" class="icheck">通用券</label>
-                            <label class="radio-inline"> <input type="radio" value="1" name="limit_person" class="icheck">定向券</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">领用方式</label>
-                        <div class="col-sm-6">
-                            <label class="radio-inline"> <input type="radio" value="0" checked="" name="issue_type" class="icheck">线上</label>
-                            <label class="radio-inline"> <input type="radio" value="1" name="issue_type" class="icheck">线下</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">有效期决定方式</label>
-                        <div class="col-sm-6">
-                            <label class="radio-inline"> <input type="radio" value="0" checked="" name="period_descision" class="icheck">生成时决定</label>
-                            <label class="radio-inline"> <input type="radio" value="1" name="period_descision" class="icheck">领用时决定</label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">状态</label>
-                        <div class="col-sm-6">
-                            <select data-name="state" class="form-control">
-                                <option value="0">正常</option>
-                                <option value="1">冻结</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">备注</label>
-                        <div class="col-sm-6">
-                            <textarea data-name="memo" class="form-control"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button  type="button" class="btn btn-default btn-flat md-close ck_cancel" data-dismiss="modal">返回</button>
-                <button id="ck_submit" type="button" class="btn btn-primary btn-flat md-close" data-dismiss="modal">确认</button>
-            </div>
-        </div>
-    </div>
-    <div class="md-overlay"></div>
 </script>
 <!--表格-->
 <script id="couponBatchs-table" type="text/html">
     <table class="table table-bordered text-centent">
-        <thead class="btn-primary">
+        <thead class="table-head">
         <tr>
             <th>序号</th>
             <th>批次号</th>
@@ -196,24 +108,33 @@
             <td>{{value.memo}}</td>
             <td>{{value.type_name}}</td>
             {{if value.apply_limit=="0"}}
-            <td>通用券</td>
+            <td>全场通用券</td>
             {{else if value.apply_limit=="1"}}
-            <td>定向券</td>
+            <td>专场通用券</td>
             {{/if}}
             <td>{{value.quantity}}</td>
             <td>{{value.provided_num}}</td>
             <td>{{value.use_num}}</td>
-            <td>{{value.issue_type}}</td>
+            {{if value.issue_type=="0"}}
+            <td>线上发放</td>
+            {{else if value.issue_type=='1'}}
+            <td>线下发放</td>
+            {{/if}}
             <td>{{value.validity_start}} -- {{value.validity_end}}</td>
-            <td><a href="#ckEdit" class="edits">详情</a></td>
+            <td>
+                <a href="#couponGerRule_edit" class="couponGerRule_edit">详情</a>
+                {{if value.issue_type=="1"}}
+                <a href="#couponGerRule_export" class="couponGerRule_export">导出</a>
+                {{/if}}
+            </td>
         </tr>
         {{/each}}
         </tbody>
     </table>
 </script>
-<!--修改-->
-<script id="tpl-ckEdit" type="text/html">
-    <div class="tab-pane active cont" id={{editHref}}>
+<!--详情-->
+<script id="tpl-couponBatchsEdit" type="text/html">
+    <div class="tab-pane active cont form-primary" id={{editHref}}>
         <div class="row">
             <div class="col-md-12">
                 <div class="header">
@@ -225,12 +146,11 @@
             <div class="content">
                 <div class="form-horizontal group-border-dashed"  style="border-radius: 0px;">
                     <div class="row editUp">
-                        {{include "editUp"}}
+                        {{include "couponBatchsEdit"}}
                     </div>
                     <div class="row">
                         <div class="form-group col-md-8 text-right">
                             <button  type="button" class="btn btn-default btn-flat md-close edit-cen">返回</button>
-                            <button  type="button" class="btn btn-primary btn-flat md-close edit-sub">确认</button>
                         </div>
                     </div>
                 </div>
@@ -238,65 +158,75 @@
         </div>
     </div>
 </script>
-<script id="editUp" type="text/html">
+<script id="couponBatchsEdit" type="text/html">
     <div class="form-group ">
         <label class="col-sm-3 control-label">批次号:</label>
         <div class="col-sm-6">
-            <input data-name="batch_no" type="text" class="form-control" value="{{list.batch_no}}" />
+            <input data-name="batch_no" type="text" class="form-control" value="{{list.batch_no}}" readonly="readonly" />
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">优惠券名称:</label>
         <div class="col-sm-6">
-            <input data-name="type_name" type="text" class="form-control" value="{{list.type_name}}" />
+            <input data-name="type_name" type="text" class="form-control" value="{{list.type_name}}"  readonly="readonly"/>
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">优惠券类型::</label>
         <div class="col-sm-6">
-            <input data-name="apply_limit" type="text" class="form-control" value="{{list.apply_limit}}" />
+            <input data-name="apply_limit" type="text" class="form-control" value="{{list.apply_limit}}" readonly="readonly" />
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">有效期:</label>
         <div class="col-sm-6">
-            <input data-name="validity_start" type="text" class="form-control" value="{{list.validity_start}}" /> -- <input data-name="validity_start" type="text" class="form-control" value="{{list.validity_end}}" />
+            <div class="col-sm-4">
+                <div class="input-group date datetime col-md-8 col-xs-8"  data-min-view="2"  data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="{{list.validity_start}}" readonly="" data-name="validity_start">
+                </div>
+            </div>
+            <div class="col-sm-1">到</div>
+            <div class="col-sm-4">
+                <div class="input-group date datetime col-md-8 col-xs-8" data-min-view="2" data-date-format="yyyy-mm-dd" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" type="text" value="{{list.validity_end}}" readonly="" data-name="validity_end">
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">数量:</label>
         <div class="col-sm-6">
-            <input data-name="quantity" type="text" class="form-control" value="{{list.quantity}}" />
+            <input data-name="quantity" type="text" class="form-control" value="{{list.quantity}}"  readonly="readonly"/>
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">已发放:</label>
         <div class="col-sm-6">
-            <input data-name="provided_num" type="text" class="form-control" value="{{list.provided_num}}" />
+            <input data-name="provided_num" type="text" class="form-control" value="{{list.provided_num}}"  readonly="readonly"/>
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">已使用:</label>
         <div class="col-sm-6">
-            <input data-name="use_num" type="text" class="form-control" value="{{list.use_num}}" />
+            <input data-name="use_num" type="text" class="form-control" value="{{list.use_num}}"  readonly="readonly"/>
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">创建人:</label>
         <div class="col-sm-6">
-            <input data-name="operater_name" type="text" class="form-control" value="{{list.operater_name}}" />
+            <input data-name="operater_name" type="text" class="form-control" value="{{list.operater_name}}" readonly="readonly" />
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">创建时间:</label>
         <div class="col-sm-6">
-            <input data-name="type_name" type="text" class="form-control" value="{{list.type_name}}" />
+            <input data-name="type_name" type="text" class="form-control" value="{{list.type_name}}" readonly="readonly" />
         </div>
     </div>
     <div class="form-group ">
         <label class="col-sm-3 control-label">批次名称:</label>
         <div class="col-sm-6">
-            <input data-name="memo" type="text" class="form-control" value="{{list.memo}}" />
+            <input data-name="memo" type="text" class="form-control" value="{{list.memo}}" readonly="readonly" />
         </div>
     </div>
 </script>

@@ -11,7 +11,6 @@ define(
                     hideCon:$("#hideCon"),
                     url:"/marketing/rabbit-point-exchanges",
                     status:0,
-                    count:10,
                     total:0,
                     user:null,
                     $this:null,
@@ -29,6 +28,7 @@ define(
                     Poss.dateTime();
                     this.loadSerach(this);
                     this.page();
+                    this.delDate();
                     this.status=1;
                 }
             },
@@ -46,79 +46,99 @@ define(
              * @url 分页接口
              * */
             page: function () {
-                var pageCom=this.user.find(".pagination"),
-                    pre=pageCom.find(".prev"),
-                    next=pageCom.find(".next"),
-                    number=pageCom.find(".number"),
-                    total=pageCom.find(".total"),
-                    _this=this;
-                Util.total=this.total;
-
-                Util.prePage(pre,next,number,_this.url, function (data) {
-                    _this.tableLoad(data);
+                var pageCom = this.user.find(".pagination"),
+                    pre = pageCom.find(".prev"),
+                    next = pageCom.find(".next"),
+                    number = pageCom.find(".number"),
+                    _this = this;
+                Util.pageDemo(pageCom);
+                next.on("click", function () {
+                    var d = _this.searchVild();
+                    Util.nextPage(pageCom, _this.url, d, function (data) {
+                        _this.tableLoad(data);
+                    });
                 });
-                Util.nextPage(pre,next,number,_this.url, function (data) {
-                    _this.tableLoad(data);
+                pre.on("click", function () {
+                    var d = _this.searchVild();
+                    Util.prePage(pageCom, _this.url, d, function (data) {
+                        _this.tableLoad(data);
+                    });
                 });
-                Util.enterEval(pre,next,number.find("input"),_this.url, function (data) {
-                    _this.tableLoad(data);
+                number.find("input").on("keyup", function (event) {
+                    var d = _this.searchVild();
+                    Util.enterEval(pageCom, event, $(this), _this.url, d, function (data) {
+                        _this.tableLoad(data);
+                    });
                 });
-                this.setCount(total);
+                //Util.totals = this.total;
+                //Util.setTotal(this.total);
             },
             tableLoad: function (data) {
-                var html=template('tt-table',{list:data});
+                for(var i=0;i<data.length;i++){
+                    data[i].ex_time=Poss.isDate(data[i].ex_time,0);
+                }
+                var html=template('ex-table',{list:data});
                 this.user.find(".tt-table").empty();
                 this.user.find(".tt-table").append(html);
             },
-            /**设置分页总数*/
-            setCount: function (total) {
-                Util.total=Math.ceil(Number(this.total)/this.count);
-                total.text(Util.total);
+            /**清除时间日期*/
+            delDate: function () {
+                $(".delDate").on("click", function () {
+                    Util.delDate($(this));
+                });
             },
             loadDate: function (callBack) {
                 var $div=$('<div></div>');
                 $('body').append($div);
-                var data={
-                    href:"Exchange"
-                };
-                $div.load('tpl/rabbit/exchange.html', function () {
-                    var h=template('tpl-Exchange',data);
-                    callBack(h);
+                this.typeData(function (sel) {
+                    var data={
+                        href:"Exchange",
+                        select:sel.data
+                    };
+                    $div.load('tpl/rabbit/exchange.html', function () {
+                        var h=template('tpl-Exchange',data);
+                        callBack(h);
+                    });
+                });
+            },
+            //兑换券类型查询
+            typeData: function (callBack) {
+                Poss.ajaxBack(Poss.baseUrl("/marketing/rabbit-point-exchanges/coupon-kinds"),"GET",{},this.user, function (d,xhr) {
+                    if(d.status==0){
+                        callBack(d);
+                    }else{
+                        Poss.errorDate("请刷新","Exchange");
+                    }
                 });
             },
             //查询
             loadSerach: function (_this) {
-                $("#Exchange").find(".ex-search").on("click", function () {
-                    _this.searchVild(function (date) {
-                        $.ajax({
-                            url:Poss.baseUrl(_this.url),
-                            type:'GET',
-                            dataType:'json',
-                            contentType:'application/json',
-                            data:date,
-                            success: function (data,textStatus, jqXHR) {
-                                _this.total=jqXHR.getResponseHeader("X-Total-Count");
-                                var pageCom=_this.user.find(".pagination"),
-                                    number=pageCom.find(".number"),
-                                    total=pageCom.find(".total");
-                                number.find("input").val(1);
-                                _this.user.find(".tplPage").show();
-                                _this.tableLoad(data);
-                                _this.setCount(total);
-                            }
-                        });
+                this.user.find(".ex-search").on("click", function () {
+                    var d = _this.searchVild();
+                    Util.initPage(d);
+                    Poss.ajaxBack(Poss.baseUrl(_this.url), "GET",d, this.user, function (d, xhr) {
+                        if (d.status == 0) {
+                            _this.total=xhr.getResponseHeader("X-Total-Count");
+                            var pageCom=_this.user.find(".pagination"),
+                                number=pageCom.find(".number"),
+                                total=pageCom.find(".total");
+                            number.find("input").val(1);
+                            _this.user.find(".tplPage").show();
+                            _this.tableLoad(d.data);
+                            Util.setTotal(_this.total);
+                        } else {
+                            Poss.isDeBug("接口调用失败", 1);
+                        }
                     });
                 });
             },
-            searchVild: function (callback) {
+            searchVild: function () {
                 var date={};
                 this.user.find(":text").each(function () {
                     date[$(this).attr("data-name")]=$(this).val();
                 });
                 Poss.selectVal(this.user,date);
-                date["last_cursor"]=1;
-                date["count"]=10;
-                callback(date);
+               return date;
             }
         });
         var s=null;

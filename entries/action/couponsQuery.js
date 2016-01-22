@@ -1,8 +1,10 @@
 require(
-    ['jQuery','entries/service/marke/couponsQuery'],
-    function ($, couponsQuery) {
+    ['jQuery','entries/service/marke/couponsQuery','entries/service/public'],
+    function ($, couponsQuery,Pulic) {
         $(function () {
-            couponsQuery.init()
+            Pulic.tokenUser(function () {
+                couponsQuery.init()
+            });
         })
     }
 )
